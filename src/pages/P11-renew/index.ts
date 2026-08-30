@@ -1,10 +1,5 @@
 // P11 续费下单页 — PANR-19 C5 high-fidelity
-//
-// 与 index.js 同源（PANR-24 引入构建工具链后 .ts 为 source of truth；.js 为
-// DevTools-loadable 副本）。
-//
-// 视觉对齐 issue 附件 p11-renew.html (v3 batch)
-// 与 P04 几乎一致；4 处差异：副标橙色 + 段标改 + Banner Info 蓝 + 默认 L + 主按钮文案
+// 与 index.js 同源（PANR-24 引入构建工具链后 .ts 为 source of truth）
 
 interface Tier {
   code: 'M' | 'Y' | 'L';
@@ -34,7 +29,7 @@ Page<PageData, Record<string, never>>({
     expireLabel: '到期时间：2026-12-31 · 续费可叠加时长',
     bannerText: '月付到期前 7 天提醒，届时手动续费',
     tiers: TIERS,
-    selectedTier: 'L', // P11 默认 L (vs P04 M)
+    selectedTier: 'L',
     agreed: false,
   },
 
@@ -51,14 +46,15 @@ Page<PageData, Record<string, never>>({
     if (Object.keys(updates).length > 0) this.setData(updates);
   },
 
-  onTapTier(e: WechatMiniprogram.TouchEvent) {
-    const code = e.currentTarget && e.currentTarget.dataset && e.currentTarget.dataset.code;
+  onTapTier(e: WechatMiniprogram.CustomEvent) {
+    const code = e && e.detail && (e.detail as { code?: string }).code;
     if (!code || !TIERS.some(t => t.code === code)) return;
     this.setData({ selectedTier: code as 'M' | 'Y' | 'L' });
   },
 
-  onToggleAgree() {
-    this.setData({ agreed: !this.data.agreed });
+  onAgreementChange(e: WechatMiniprogram.CustomEvent) {
+    const agreed = !!(e && e.detail && (e.detail as { checked?: boolean }).checked);
+    this.setData({ agreed });
   },
 
   onSubmit() {

@@ -1,4 +1,10 @@
 {
   "navigationBarTitleText": "续费",
-  "usingComponents": {}
+  "usingComponents": {
+    "goods-header-card": "/components/goods-header-card/index",
+    "tier-list": "/components/tier-list/index",
+    "banner": "/components/banner/index",
+    "agreement-row": "/components/agreement-row/index",
+    "action-footer": "/components/action-footer/index"
+  }
 }
