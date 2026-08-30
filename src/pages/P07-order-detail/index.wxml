@@ -1,14 +1,14 @@
-<!-- P07 订单详情页 — PANR-19 C5 high-fidelity (P0 组件化)
-     重构后：
-       - <auth-code-card> 已嵌（B1）
-       - <goods-header-card> 替代 inline .header-card（商品信息区）
-       - <action-footer> 替代 inline .footer + 2 buttons
-     保留页面专属：
-       - .error-block (error/empty 空态)
-       - .status-card (订单状态卡)
-       - .info-block (订单信息)
-       - .section-label / .history-row / .empty-history (续费记录区块)
-     系统 nav 由 index.json navigationBarTitleText "订单详情" 渲染 -->
+<!-- P07 订单详情页 — PANR-19 C5 high-fidelity (P0 组件化 v2)
+     payment-deferred 期间默认 loadState=error，HTML 直展示 error 空态；
+     loaded 态保留供 PANR-24 接入：
+       1. 订单状态卡 (订单号 + status badge + 金额大字)
+       2. 鉴权码卡 (B1 auth-code-card 嵌入)
+       3. 商品信息 (P0 goods-header-card)
+       4. 订单信息区: 创建时间 / 支付方式 / 订单号 / 授权码 (mask)
+       5. 历史码区块 (（7 天缓冲）
+       6. 双按钮 footer (查看授权码 + 申请售后)
+     2026-08-30 P04 CTA bug fix 同批次：
+       - action-footer v2 (no slot, 内部渲染 button) -->
 <view class="page">
   <!-- Error / empty state -->
   <view wx:if="{{loadState === 'error' || !order}}" class="error-block">
@@ -84,14 +84,14 @@
       <text>暂无续费记录</text>
     </view>
 
-    <!-- 6. Footer actions (P0 组件化) -->
-    <action-footer single="{{false}}">
-      <view slot="secondary">
-        <button class="btn-secondary" bindtap="onViewAuthCode" hover-class="btn-secondary--hover">查看授权码</button>
-      </view>
-      <view slot="primary">
-        <button class="btn-primary" bindtap="onApplyAfterSales" hover-class="btn-primary--hover">申请售后</button>
-      </view>
-    </action-footer>
+    <!-- 6. Footer actions (v2 no slot) - 双按钮 -->
+    <action-footer
+      primary-label="申请售后"
+      primary-disabled="{{false}}"
+      secondary-label="查看授权码"
+      secondary-disabled="{{false}}"
+      bind:primary="onApplyAfterSales"
+      bind:secondary="onViewAuthCode"
+    />
   </view>
 </view>

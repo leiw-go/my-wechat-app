@@ -1,4 +1,4 @@
-/* P07 订单详情页 — high-fidelity (P0 组件化后)
+/* P07 订单详情页 — high-fidelity (P0 组件化后 v2)
  * 移除 inline .header-card / .footer / .btn-primary / .btn-secondary（已抽组件）
  * 保留页面专属：error-block / status-card / info-block / history-row / section-label / empty-history */
 
@@ -203,22 +203,4 @@
   text-align: center;
   font-size: 13px;
   color: #86909C;
-}
-
-/* 6. Footer actions (action-footer slot 内 button) */
-.btn-secondary {
-  flex: 1;
-  height: 44rpx;
-  line-height: 44rpx;
-  background: #FFFFFF;
-  color: #4E5969;
-  border: 1rpx solid #E5E6EB;
-  border-radius: 16rpx;
-  font-size: 14px;
-  font-weight: 500;
-  margin: 0;
-}
-
-.btn-secondary--hover {
-  background: #F7F8FA;
 }
