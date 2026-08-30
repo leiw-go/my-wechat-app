@@ -1,11 +1,7 @@
-<!-- P12 售后 / 服务协议页 — PANR-19 C5 high-fidelity (P0 组件化)
-     重构后：
-       - <banner tone="warn"> 替代 inline .banner.banner--warn
-       - <action-footer single=true> 替代 inline .footer + button
-     保留页面专属：
-       - .mode-bar (mode 切换；属 P1 候选 segmented-tabs)
-       - .apply-card / .contact-btn / .faq-list / .agreement 长文
-     系统 nav 由 index.json navigationBarTitleText "售后" 渲染 -->
+<!-- P12 售后 / 服务协议页 — PANR-19 C5 high-fidelity (P0 组件化 v2)
+     顶部 mode 切换：售后（默认） / 服务协议
+     2026-08-30 P04 CTA bug fix 同批次：
+       - action-footer v2 (no slot, 内部渲染 button) -->
 <view class="page">
   <!-- Mode tab -->
   <view class="mode-bar">
@@ -50,17 +46,12 @@
         </view>
       </view>
 
-      <!-- Footer (P0 组件化) -->
-      <action-footer single="{{true}}">
-        <view slot="primary">
-          <button
-            class="btn-primary"
-            bindtap="onSubmit"
-            disabled="{{true}}"
-            hover-class="btn-primary--hover"
-          >提交售后申请（未上线）</button>
-        </view>
-      </action-footer>
+      <!-- Footer (v2 no slot) -->
+      <action-footer
+        primary-label="提交售后申请 · 支付未上线"
+        primary-disabled="{{true}}"
+        bind:primary="onSubmit"
+      />
     </view>
   </block>
 
