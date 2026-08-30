@@ -1,0 +1,25 @@
+<!-- P12 售后页 — PANR-19 C5 payment-deferred -->
+<view class="page">
+  <!-- 仅 after-sales 模式加 warn banner（agreement 模式是法务条款展示，与支付无关） -->
+  <block wx:if="{{mode === 'after-sales'}}">
+    <view class="banner banner--warn">
+      <view class="banner__icon">⚠️</view>
+      <view class="banner__body">支付功能未启用</view>
+    </view>
+  </block>
+
+  <block wx:if="{{mode === 'agreement'}}">
+    <view class="agreement">
+      <view class="agreement__title">服务条款</view>
+      <view class="agreement__body">{{agreementText}}</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="aftersales">
+      <view class="aftersales__title">售后申请</view>
+      <view class="aftersales__desc">支付功能未启用，售后工单暂不开放自助提交，请联系人工客服。</view>
+      <button class="btn btn--secondary" bindtap="onContactCs">联系人工客服</button>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,23 @@
+<!-- P04 订单确认页 — PANR-19 C5 payment-deferred -->
+<view class="page">
+  <view class="banner banner--warn">
+    <view class="banner__icon">⚠️</view>
+    <view class="banner__body">支付功能未启用</view>
+  </view>
+
+  <view class="card">
+    <view class="card__title">{{goodsName}}</view>
+    <view class="card__row">
+      <text class="card__label">套餐</text>
+      <text class="card__value">{{tierName}}</text>
+    </view>
+    <view class="card__row">
+      <text class="card__label">金额</text>
+      <text class="card__value card__value--price">¥ {{price}}</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="btn btn--primary" bindtap="onSubmit">提交订单（未上线）</button>
+  </view>
+</view>

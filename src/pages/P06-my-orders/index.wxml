@@ -1,0 +1,17 @@
+<!-- P06 我的订单页 — PANR-19 C5 payment-deferred -->
+<view class="page">
+  <!-- empty 态（默认）：本迭代无可呈现订单，明确说明原因而非假装"暂无数据" -->
+  <view class="empty" wx:if="{{orders.length === 0}}">
+    <view class="empty__icon">📭</view>
+    <view class="empty__title">暂无订单</view>
+    <view class="empty__desc">支付功能未启用，暂无订单</view>
+  </view>
+
+  <!-- 真实有订单时正常渲染（保留接口，未来支付恢复即可用） -->
+  <block wx:else>
+    <view class="order" wx:for="{{orders}}" wx:key="orderNo">
+      <view class="order__no">订单号：{{item.orderNo}}</view>
+      <view class="order__status">{{item.statusLabel}}</view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,26 @@
+<!-- P07 订单详情页 — PANR-19 C5 payment-deferred -->
+<view class="page">
+  <!-- error 态：订单不存在 / 后端 404 / 未登录 -->
+  <view class="empty" wx:if="{{loadState === 'error' || !order}}">
+    <view class="empty__icon">📄</view>
+    <view class="empty__title">暂无订单详情</view>
+    <view class="empty__desc">支付功能未启用，暂无订单详情</view>
+  </view>
+
+  <!-- loaded 态保留：未来支付恢复时可直接用 -->
+  <block wx:elif="{{loadState === 'loaded'}}">
+    <view class="detail">
+      <view class="detail__row">
+        <text class="detail__label">订单号</text>
+        <text class="detail__value">{{order.orderNo}}</text>
+      </view>
+      <view class="detail__row">
+        <text class="detail__label">状态</text>
+        <text class="detail__value">{{order.statusLabel}}</text>
+      </view>
+
+      <!-- P8 入口隐藏：支付未启用时授权码不存在，原始按钮替换为 toast 拦截 -->
+      <button class="btn btn--secondary" bindtap="onViewAuthCode">查看授权码</button>
+    </view>
+  </block>
+</view>

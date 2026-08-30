@@ -1,0 +1,44 @@
+/**
+ * 全局样式 — PANR-19 C5
+ *
+ * 本迭代支付功能砍掉，提供 .banner 通用样式供 P4/P5/P11/P12 占位页使用，
+ * 文案统一为后端 5030 message "支付功能未启用"，避免前后端文案漂移。
+ */
+
+page {
+  background: #f7f8fa;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  color: #1f2329;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+  margin: 16rpx 24rpx;
+  padding: 20rpx 24rpx;
+  border-radius: 12rpx;
+  border: 1rpx solid transparent;
+}
+
+.banner--warn {
+  background: #fff7e6;
+  border-color: #ffd591;
+  color: #874d00;
+}
+
+.banner__icon {
+  flex: none;
+  font-size: 28rpx;
+  line-height: 40rpx;
+}
+
+.banner__body {
+  flex: 1;
+  font-size: 26rpx;
+  line-height: 40rpx;
+  word-break: break-all;
+}

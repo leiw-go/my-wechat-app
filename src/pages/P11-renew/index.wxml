@@ -1,0 +1,27 @@
+<!-- P11 续费下单页 — PANR-19 C5 payment-deferred -->
+<view class="page">
+  <view class="banner banner--warn">
+    <view class="banner__icon">⚠️</view>
+    <view class="banner__body">支付功能未启用</view>
+  </view>
+
+  <view class="card">
+    <view class="card__title">续费 {{goodsName}}</view>
+    <view class="card__row">
+      <text class="card__label">当前套餐</text>
+      <text class="card__value">{{currentTier}}</text>
+    </view>
+    <view class="card__row">
+      <text class="card__label">到期时间</text>
+      <text class="card__value">{{expireAt}}</text>
+    </view>
+    <view class="card__row">
+      <text class="card__label">续费金额</text>
+      <text class="card__value card__value--price">¥ {{price}}</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="btn btn--primary" bindtap="onSubmit">续费并支付（未上线）</button>
+  </view>
+</view>

@@ -1,0 +1,39 @@
+<!-- P05 支付结果页 — PANR-19 C5 payment-deferred -->
+<view class="page">
+  <!-- 覆盖所有 result 分支（success / pending / failed / unknown）的顶部占位，避免不同态下文案漂移 -->
+  <view class="banner banner--warn">
+    <view class="banner__icon">⚠️</view>
+    <view class="banner__body">支付功能未启用</view>
+  </view>
+
+  <block wx:if="{{result === 'success'}}">
+    <view class="result result--success">
+      <view class="result__icon">✓</view>
+      <view class="result__title">支付成功（占位）</view>
+      <view class="result__desc">本迭代支付功能砍掉，授权码不会生成</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{result === 'pending'}}">
+    <view class="result result--pending">
+      <view class="result__icon">⏳</view>
+      <view class="result__title">支付结果确认中（占位）</view>
+      <view class="result__desc">60s 轮询已停用</view>
+    </view>
+  </block>
+
+  <block wx:elif="{{result === 'failed'}}">
+    <view class="result result--failed">
+      <view class="result__icon">✕</view>
+      <view class="result__title">支付失败（占位）</view>
+      <view class="result__desc">请稍后重试</view>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="result result--unknown">
+      <view class="result__icon">?</view>
+      <view class="result__title">支付结果未知（占位）</view>
+    </view>
+  </block>
+</view>
