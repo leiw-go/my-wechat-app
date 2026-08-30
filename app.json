@@ -1,0 +1,17 @@
+{
+  "pages": [
+    "pages/P04-order-confirm/index",
+    "pages/P05-pay-result/index",
+    "pages/P06-my-orders/index",
+    "pages/P07-order-detail/index",
+    "pages/P11-renew/index",
+    "pages/P12-after-sales/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "PANR-19 C5 Demo",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f5f5",
+    "enablePullDownRefresh": false
+  }
+}

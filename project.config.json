@@ -1,0 +1,20 @@
+{
+  "miniprogramRoot": "src/",
+  "projectname": "panr-19-c5",
+  "appid": "wxde0c66d012c15d87",
+  "compileType": "miniprogram",
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": false,
+    "minified": false,
+    "newFeature": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": false,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": false,
+    "uploadWithSourceMap": true
+  },
+  "libVersion": "3.4.0"
+}
