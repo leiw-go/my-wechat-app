@@ -1,11 +1,12 @@
-import { Controller, Get, Req } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Request } from 'express';
 import { MeService } from './me.service';
-import { JwtPayload } from '../common/jwt-auth.guard';
+import { JwtAuthGuard, JwtPayload } from '../common/jwt-auth.guard';
 
 @ApiTags('个人中心 / Me')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('me')
 export class MeController {
   constructor(private readonly meService: MeService) {}

@@ -9,6 +9,7 @@ import { OrderModule } from '../order/order.module';
   imports: [OrderModule],
   controllers: [PaymentController],
   providers: [PaymentService, WxPayService, PayNotifyService],
-  exports: [PaymentService, PayNotifyService],
+  // WxPayService 也导出 — CronService 在 AppModule 注入, 扫超时订单 / 调起关单
+  exports: [PaymentService, WxPayService, PayNotifyService],
 })
 export class PaymentModule {}

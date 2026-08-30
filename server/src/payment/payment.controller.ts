@@ -9,17 +9,22 @@ import {
   Headers,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Request } from 'express';
 import { PaymentService } from './payment.service';
 import { PayNotifyService } from './pay-notify.service';
 import { UnifiedOrderDto } from './dto';
-import { JwtPayload, Public } from '../common/jwt-auth.guard';
-import { SkipPayGuard } from './wx-pay-enabled.guard';
+import { JwtAuthGuard, JwtPayload, Public } from '../common/jwt-auth.guard';
+import { SkipPayGuard, WxPayEnabledGuard } from './wx-pay-enabled.guard';
 
 @ApiTags('支付 / Payment')
 @Controller('pay')
+// Guard 顺序很重要: WxPayEnabledGuard 先于 JwtAuthGuard。
+// WECHAT_PAY_* env 缺失时, 直接返 5030 (业务降级), 不被 JwtAuthGuard 的 401 拦截。
+// /api/pay/notify 走 @Public() + @SkipPayGuard() 同时跳过两者。
+@UseGuards(WxPayEnabledGuard, JwtAuthGuard)
 export class PaymentController {
   constructor(
     private readonly paymentService: PaymentService,

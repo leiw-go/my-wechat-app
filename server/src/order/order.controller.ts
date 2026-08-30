@@ -6,15 +6,17 @@ import {
   Param,
   Query,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Request } from 'express';
 import { OrderService } from './order.service';
 import { CreateOrderDto, RenewOrderDto } from './dto';
-import { JwtPayload } from '../common/jwt-auth.guard';
+import { JwtAuthGuard, JwtPayload } from '../common/jwt-auth.guard';
 
 @ApiTags('订单 / Order')
 @ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}

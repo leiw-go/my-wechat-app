@@ -1,9 +1,9 @@
-import { Controller, Post, Body, Param, Req, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Param, Req, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthCodeService } from './auth-code.service';
 import { ResendDto } from './dto';
-import { JwtPayload, Public } from '../common/jwt-auth.guard';
+import { JwtAuthGuard, JwtPayload, Public } from '../common/jwt-auth.guard';
 import { verifyAuthCode } from './auth-code.generator';
 
 @ApiTags('授权码 / AuthCode')
@@ -13,9 +13,10 @@ export class AuthCodeController {
 
   /**
    * POST /api/authcode/resend
-   * 申请重发授权码 (通过客服通道)
+   * 申请重发授权码 (通过客服通道) — 需要 JWT
    */
   @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   @Post('resend')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: '申请重发授权码' })
