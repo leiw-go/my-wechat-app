@@ -8,8 +8,8 @@
 //   - Header 唯一合法: Authorization: Bearer <access_token>
 //   - Storage: panr_access_token / panr_refresh_token / panr_user_profile
 //   - 写接口 (POST/PUT/PATCH/DELETE) 必须 Idempotency-Key: ${openid}-${ts}-${rand}
-//   - 401 / code=2000 → 清 token + wx.reLaunch('/pages/login/index')
-//   - 503 / code=5030 → 跳转支付未启用占位页（guard 顺序：WxPayEnabledGuard 先于 JwtAuthGuard）
+//   - 401 / code=2000 → 清 token + wx.reLaunch('/pages/P06-my-orders/index')（登录页 PANR-24）
+//   - 503 / code=5030 → wx.showToast 兜底（占位页 PANR-24；当前 payment-deferred 不触发）
 //   - 公开端点白名单（不发 token）: /api/auth/wx-login, /api/auth/refresh,
 //                                    /api/category/list, /api/goods/*, /api/health/live,
 //                                    /api/pay/notify
@@ -92,19 +92,26 @@ function buildHeader(method, path, customHeader = {}) {
   return header;
 }
 
-// 401 / code=2000 → 静默清 token + 跳登录
+// 401 / code=2000 → 静默清 token + 落「我的订单」作 safe landing
+//
+// 修复：原本 reLaunch 到 /pages/login/index，但登录页不在 C5 范围
+//（c5_demo_scope: narrowed_to_6_placeholder_pages + auth_code_card，登录延后到
+// PANR-24）。登录真正接入时此处改为 reLaunch 到登录页；现在落 P06-my-orders
+// 让用户看到「请先登录后再来」的上下文（业务侧 toast 由调用方 catch 后展示）。
 function handleAuthFail() {
   clearAuthStorage();
-  wx.reLaunch({ url: '/pages/login/index' });
+  wx.reLaunch({ url: '/pages/P06-my-orders/index' });
 }
 
 // 503 / code=5030 → 跳支付未启用占位页（guard 顺序：5030 先于 401）
 //
-// TODO(PANR-19 C5 next phase): 新增 src/pages/_placeholder/payment-disabled/index
-// 当前 P04 onSubmit 不走 request()，所以 5030 路径不触发；P05 后续页面集成 request
-// 后会触发，届时需先创建占位页。
+// 修复：原本 reLaunch 到 /pages/_placeholder/payment-disabled/index，但
+// 该占位页未建（PANR-24 跟进）。当前所有支付类操作都被前端的 wx.showToast
+// 兜底短路，根本不会发出支付请求，所以 5030 路径不会触发；这里改成显式
+// toast + 不跳转，避免「点支付 → 跳不存在的页 → 黑屏」二级故障。
+// PANR-24 真正接入 request.js 的支付调用时，记得先建占位页再改回 reLaunch。
 function handlePaymentDisabled() {
-  wx.reLaunch({ url: '/pages/_placeholder/payment-disabled/index' });
+  wx.showToast({ title: '支付功能开发中', icon: 'none' });
 }
 
 function resolveUrl(path) {

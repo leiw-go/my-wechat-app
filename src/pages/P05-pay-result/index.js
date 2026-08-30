@@ -87,7 +87,9 @@ Page({
   onSecondary() {
     const result = this.data.result;
     if (result === 'success') {
-      wx.reLaunch({ url: '/pages/P04-order-confirm/index' });
+      // 修复：success 态次按钮「返回首页」文案对应跳 P06-my-orders，
+      // 而不是 P04-order-confirm（之前会回环到下单页，UX 不通）
+      wx.reLaunch({ url: '/pages/P06-my-orders/index' });
       return;
     }
     // pending 取消 / failed 联系客服：payment-deferred 期间 toast 兜底
