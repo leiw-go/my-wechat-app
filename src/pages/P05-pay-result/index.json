@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "支付结果",
   "usingComponents": {
-    "auth-code-card": "/components/auth-code-card/index"
+    "auth-code-card": "/components/auth-code-card/index",
+    "action-footer": "/components/action-footer/index"
   }
 }

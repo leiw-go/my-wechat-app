@@ -1,19 +1,12 @@
-<!-- P05 支付结果页 — PANR-19 C5 high-fidelity
-     视觉对齐 issue 附件 p05-pay-result.html (v3 batch)
-     4 个 result 态 (success/pending/failed/unknown):
-       success: 绿圆 + ✓ + 支付成功 + 描述 + auth-card + 「查看订单详情」+ 「返回首页」
-       pending: 橙圆 + ⏱ + 支付处理中 + 「我已支付」+ 「取消」
-       failed:  红圆 + ✕ + 支付失败 + 「重试支付」+ 「联系客服」
-       unknown: 灰圆 + ? + 订单状态未知 + （无 footer）
-     payment-deferred 期间按钮点击 → toast「支付功能未启用」（与 5030 对齐） -->
+<!-- P05 支付结果页 — PANR-19 C5 high-fidelity (P0 组件化)
+     重构后：
+       - <auth-code-card> 已嵌（B1）—— 仅 success 态
+       - <action-footer> 替代 inline .footer + .btn-primary + .btn-secondary
+       - 4 result 态 .result-block / .result-circle / .result--success/pending/failed/unknown 保留（专属 UI；P05 result-block 不在 P0 组件清单内）
+     系统 nav 由 index.json navigationBarTitleText "支付结果" 渲染 -->
 <view class="page">
-  <!--
-    顶部 title 由 index.json 的 navigationBarTitleText "支付结果" 渲染为 WeChat
-    系统导航栏；不在 WXML 内重复 .nav 块（dispatch R-011 §6 协议）。
-  -->
-
   <view class="content">
-    <!-- Result block — 4 态统一白卡 16rpx + 顶部 6rpx 状态条 -->
+    <!-- Result block -->
     <view class="result-block result--{{result}}">
       <view class="result-circle result-circle--{{result}}">
         <text class="result-glyph">{{glyph}}</text>
@@ -22,7 +15,7 @@
       <view class="result-desc">{{desc}}</view>
     </view>
 
-    <!-- Auth code card — 仅 success 态嵌入 -->
+    <!-- Auth code card (B1) — 仅 success 态嵌入 -->
     <block wx:if="{{result === 'success'}}">
       <auth-code-card
         code="{{authCode}}"
@@ -33,12 +26,16 @@
       <view class="auth-hint">点击授权码可一键复制到剪贴板</view>
     </block>
 
-    <!-- Footer actions — unknown 态无 footer -->
+    <!-- Footer (unknown 态无 footer) -->
     <block wx:if="{{result !== 'unknown'}}">
-      <view class="footer">
-        <button class="btn-primary" bindtap="onPrimary" hover-class="btn-primary--hover">{{primaryLabel}}</button>
-        <button class="btn-secondary" bindtap="onSecondary" hover-class="btn-secondary--hover">{{secondaryLabel}}</button>
-      </view>
+      <action-footer single="{{false}}">
+        <view slot="primary">
+          <button class="btn-primary" bindtap="onPrimary" hover-class="btn-primary--hover">{{primaryLabel}}</button>
+        </view>
+        <view slot="secondary">
+          <button class="btn-secondary" bindtap="onSecondary" hover-class="btn-secondary--hover">{{secondaryLabel}}</button>
+        </view>
+      </action-footer>
     </block>
   </view>
 </view>
