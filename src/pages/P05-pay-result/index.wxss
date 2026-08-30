@@ -1,37 +1,155 @@
-/* P05 支付结果页 — page-specific styles
- * .banner* 已在 global.wxss，本文件只补 result* BEM 块
+/* P05 支付结果页 — high-fidelity
+ * 设计令牌：白底 #FFFFFF / 边框 #E5E6EB / 圆角 16rpx
+ * 4 态色卡：success #E6F8E9+00B42A / pending #FFF4E5+FF7D00 / failed #FFECEC+F53F3F / unknown #F2F3F5+4E5969
+ * 系统 nav 由 index.json navigationBarTitleText 提供；本文件不写 .nav 块
  */
 
 .page {
-  padding: 0 0 48rpx 0;
+  background: #F7F8FA;
+  min-height: 100vh;
+  padding-bottom: 200rpx; /* 留出 footer 高度 */
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  color: #1D2129;
 }
 
-.result {
-  margin: 24rpx;
-  padding: 32rpx 24rpx;
-  border-radius: 12rpx;
-  background: #ffffff;
+.content {
+  padding: 16rpx 16rpx 16rpx;
+}
+
+/* Result block — 4 态统一白卡 */
+.result-block {
   text-align: center;
-}
-
-.result__icon {
-  font-size: 64rpx;
-  line-height: 1;
+  padding: 32rpx 16rpx 32rpx;
+  background: #FFFFFF;
+  border-radius: 16rpx;
   margin-bottom: 16rpx;
 }
 
-.result__title {
-  font-size: 32rpx;
+.result-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  margin: 8rpx auto 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-glyph {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.result-title {
+  font-size: 20px;
   font-weight: 600;
-  margin-bottom: 8rpx;
+  margin-bottom: 6rpx;
+  line-height: 1.4;
 }
 
-.result__desc {
-  font-size: 26rpx;
-  color: #86909c;
+.result-desc {
+  font-size: 14px;
+  color: #4E5969;
+  line-height: 1.5;
 }
 
-.result--success { border-top: 6rpx solid #00b42a; }
-.result--pending { border-top: 6rpx solid #ff7d00; }
-.result--failed  { border-top: 6rpx solid #f53f3f; }
-.result--unknown { border-top: 6rpx solid #c9cdd4; }
+/* 4 态：成功 */
+.result--success .result-circle {
+  background: #E6F8E9;
+}
+.result--success .result-glyph {
+  color: #00B42A;
+}
+.result--success {
+  border-top: 6rpx solid #00B42A;
+}
+
+/* 4 态：处理中 */
+.result--pending .result-circle {
+  background: #FFF4E5;
+}
+.result--pending .result-glyph {
+  color: #FF7D00;
+}
+.result--pending {
+  border-top: 6rpx solid #FF7D00;
+}
+
+/* 4 态：失败 */
+.result--failed .result-circle {
+  background: #FFECEC;
+}
+.result--failed .result-glyph {
+  color: #F53F3F;
+}
+.result--failed {
+  border-top: 6rpx solid #F53F3F;
+}
+
+/* 4 态：未知 */
+.result--unknown .result-circle {
+  background: #F2F3F5;
+}
+.result--unknown .result-glyph {
+  color: #4E5969;
+}
+.result--unknown {
+  border-top: 6rpx solid #C9CDD4;
+}
+
+/* Auth code card hint */
+.auth-hint {
+  font-size: 12px;
+  color: #86909C;
+  text-align: center;
+  margin-top: 10rpx;
+  line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14rpx 16rpx 28rpx;
+  background: #FFFFFF;
+  border-top: 1rpx solid #F0F1F3;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  width: 100%;
+  height: 48px;
+  background: #1677FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 16rpx;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: 48px;
+  margin: 0;
+}
+
+.btn-primary--hover {
+  opacity: 0.85;
+}
+
+.btn-secondary {
+  width: 100%;
+  height: 44px;
+  background: #FFFFFF;
+  color: #4E5969;
+  border: 1rpx solid #E5E6EB;
+  border-radius: 16rpx;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12rpx;
+  line-height: 44px;
+}
+
+.btn-secondary--hover {
+  background: #F7F8FA;
+}
