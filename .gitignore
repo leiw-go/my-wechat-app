@@ -1,0 +1,43 @@
+# Node
+node_modules/
+dist/
+build/
+coverage/
+.npm
+.eslintcache
+
+# Env
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/var/log/panr-backend.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# WeChat miniprogram
+miniprogram_npm/
+project.private.config.json
+
+# Test artifacts
+.nyc_output/
+
+# Multica runtime
+.multica/
+.agent_context/
+.claude/
+
+# Project agent instructions (lives in workdir but is runtime-local, not repo source)
+CLAUDE.md
