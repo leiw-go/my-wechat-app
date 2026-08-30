@@ -1,0 +1,179 @@
+// Prisma schema for PANR-25 C5 backend
+// MySQL 8.0+ (5.7 compatible via utf8mb4)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  openid         String   @unique @db.VarChar(64)
+  unionid        String?  @db.VarChar(64)
+  nickname       String?  @db.VarChar(64)
+  avatarUrl      String?  @map("avatar_url") @db.VarChar(256)
+  userType       Int      @default(2) @map("user_type") @db.TinyInt
+  companyName    String?  @map("company_name") @db.VarChar(128)
+  bizLicenseNo   String?  @map("biz_license_no") @db.VarChar(64)
+  phoneEnc       String?  @map("phone_enc") @db.VarChar(256)
+  phoneHash      String?  @map("phone_hash") @db.VarChar(64)
+  createdAt      DateTime @default(now()) @map("created_at")
+  lastLoginAt    DateTime @default(now()) @map("last_login_at")
+
+  orders        Order[]
+  authCodes     AuthCode[]
+
+  @@index([phoneHash], map: "idx_user_phone_hash")
+  @@index([unionid], map: "idx_user_unionid")
+  @@index([userType, lastLoginAt], map: "idx_user_user_type")
+  @@map("user")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(64)
+  sort      Int      @default(0)
+  status    Int      @default(1) @db.TinyInt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([status, sort], map: "idx_category_status_sort")
+  @@map("category")
+}
+
+model Goods {
+  id          BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  title       String   @db.VarChar(128)
+  subtitle    String?  @db.VarChar(128)
+  coverImg    String   @map("cover_img") @db.VarChar(256)
+  description String   @db.Text
+  demoUrl     String?  @map("demo_url") @db.VarChar(256)
+  categoryId  BigInt   @map("category_id") @db.UnsignedBigInt
+  status      Int      @default(1) @db.TinyInt
+  ipProofUrl  String   @map("ip_proof_url") @db.VarChar(256)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  tiers      GoodsTier[]
+  orders     Order[]
+  authCodes  AuthCode[]
+
+  @@index([status, categoryId], map: "idx_goods_status_category")
+  @@index([title], map: "idx_goods_title")
+  @@index([createdAt], map: "idx_goods_created")
+  @@map("goods")
+}
+
+model GoodsTier {
+  id            BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  goodsId       BigInt   @map("goods_id") @db.UnsignedBigInt
+  tierCode      String   @map("tier_code") @db.VarChar(8)
+  tierName      String   @map("tier_name") @db.VarChar(32)
+  priceCent     Int      @map("price_cent")
+  durationDays  Int      @map("duration_days")
+  sort          Int      @default(0)
+  status        Int      @default(1) @db.TinyInt
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  goods   Goods    @relation(fields: [goodsId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@unique([goodsId, tierCode], map: "uk_goods_tier")
+  @@index([goodsId, status], map: "idx_goods_tier_goods_status")
+  @@map("goods_tier")
+}
+
+// 8 态状态机 (String, 由 CHECK 约束保证取值范围)
+model Order {
+  id              BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  orderNo         String   @unique @map("order_no") @db.VarChar(32)
+  userId          BigInt   @map("user_id") @db.UnsignedBigInt
+  userType        Int      @default(2) @map("user_type") @db.TinyInt
+  goodsId         BigInt   @map("goods_id") @db.UnsignedBigInt
+  tierId          BigInt   @map("tier_id") @db.UnsignedBigInt
+  priceCent       Int      @map("price_cent")
+  status          String   @default("pending_payment") @db.VarChar(16)
+  wxTransactionId String?  @map("wx_transaction_id") @db.VarChar(64)
+  paidAt          DateTime? @map("paid_at")
+  expireAt        DateTime? @map("expire_at")
+  parentOrderId   BigInt?  @map("parent_order_id") @db.UnsignedBigInt
+  extra           Json?    @db.Json
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user        User       @relation(fields: [userId], references: [id])
+  goods       Goods      @relation(fields: [goodsId], references: [id])
+  tier        GoodsTier  @relation(fields: [tierId], references: [id])
+  parentOrder Order?     @relation("OrderRenew", fields: [parentOrderId], references: [id])
+  renewals    Order[]    @relation("OrderRenew")
+  authCodes   AuthCode[]
+
+  @@index([userId, status, createdAt], map: "idx_order_user_status_created")
+  @@index([status, createdAt], map: "idx_order_status_created")
+  @@index([expireAt], map: "idx_order_expire_active")
+  @@index([wxTransactionId], map: "idx_order_wx_tx")
+  @@index([parentOrderId], map: "idx_order_parent")
+  @@map("order")
+}
+
+model AuthCode {
+  id             BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  code           String   @unique @db.VarChar(32)
+  orderId        BigInt   @map("order_id") @db.UnsignedBigInt
+  userId         BigInt   @map("user_id") @db.UnsignedBigInt
+  goodsId        BigInt   @map("goods_id") @db.UnsignedBigInt
+  status         Int      @default(1) @db.TinyInt
+  expireAt       DateTime @map("expire_at")
+  activatedAt    DateTime? @map("activated_at")
+  activateCount  Int      @default(0) @map("activate_count")
+  replacedBy     BigInt?  @map("replaced_by") @db.UnsignedBigInt
+  replacedExpire DateTime? @map("replaced_expire")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  order         Order      @relation(fields: [orderId], references: [id])
+  user          User       @relation(fields: [userId], references: [id])
+  goods         Goods      @relation(fields: [goodsId], references: [id])
+  replacedFrom  AuthCode[] @relation("AuthCodeReplace")
+  replacedTo    AuthCode?  @relation("AuthCodeReplace", fields: [replacedBy], references: [id])
+
+  @@index([orderId], map: "idx_auth_code_order")
+  @@index([userId, status], map: "idx_auth_code_user_status")
+  @@index([goodsId], map: "idx_auth_code_goods")
+  @@index([replacedBy], map: "idx_auth_code_replaced")
+  @@index([replacedExpire], map: "idx_auth_code_replaced_expire")
+  @@map("auth_code")
+}
+
+model IdempotencyKey {
+  id          BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  idemKey     String   @map("idem_key") @db.VarChar(128)
+  userId      BigInt?  @map("user_id") @db.UnsignedBigInt
+  endpoint    String   @db.VarChar(128)
+  requestHash String   @map("request_hash") @db.VarChar(64)
+  response    Json?    @db.Json
+  statusCode  Int      @default(0) @map("status_code")
+  createdAt   DateTime @default(now()) @map("created_at")
+  expireAt    DateTime @map("expire_at")
+
+  @@unique([idemKey, endpoint], map: "uk_idem_key_endpoint")
+  @@index([expireAt], map: "idx_idem_expire")
+  @@map("idempotency_key")
+}
+
+model CronJobLog {
+  id         BigInt   @id @default(autoincrement()) @db.UnsignedBigInt
+  jobName    String   @map("job_name") @db.VarChar(64)
+  runAt      DateTime @default(now()) @map("run_at")
+  affected   Int      @default(0)
+  durationMs Int      @default(0) @map("duration_ms")
+  error      String?  @db.Text
+
+  @@index([jobName, runAt], map: "idx_cron_log_job")
+  @@map("cron_job_log")
+}

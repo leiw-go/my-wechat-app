@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pwd
+      MYSQL_DATABASE: panr_saas
+      MYSQL_USER: panr
+      MYSQL_PASSWORD: panr_dev_pwd
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      PORT: '3000'
+      DB_HOST: mysql
+      DB_PORT: '3306'
+      DB_USER: panr
+      DB_PASS: panr_dev_pwd
+      DB_NAME: panr_saas
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+      JWT_ACCESS_SECRET: dev_access_secret_change_me
+      JWT_REFRESH_SECRET: dev_refresh_secret_change_me
+      JWT_ACCESS_TTL: '7200'
+      JWT_REFRESH_TTL: '604800'
+      WX_APP_ID: wx_dev_app_id
+      WX_APP_SECRET: wx_dev_secret
+      WX_PAY_MCH_ID: '1600000000'
+      WX_PAY_API_V3_KEY: dev_32_byte_v3_key_xxxxxxxxxxxxxxxxx
+      WX_PAY_NOTIFY_URL: http://localhost:3000/api/pay/notify
+      KMS_MODE: env
+      KMS_PHONE_KEY: dev_phone_encryption_key_xxxxxxxx
+    ports:
+      - '3000:3000'
+
+volumes:
+  mysql_data:
