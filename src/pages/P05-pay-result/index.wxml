@@ -1,9 +1,12 @@
-<!-- P05 支付结果页 — PANR-19 C5 high-fidelity (P0 组件化)
-     重构后：
-       - <auth-code-card> 已嵌（B1）—— 仅 success 态
-       - <action-footer> 替代 inline .footer + .btn-primary + .btn-secondary
-       - 4 result 态 .result-block / .result-circle / .result--success/pending/failed/unknown 保留（专属 UI；P05 result-block 不在 P0 组件清单内）
-     系统 nav 由 index.json navigationBarTitleText "支付结果" 渲染 -->
+<!-- P05 支付结果页 — PANR-19 C5 high-fidelity (P0 组件化 v2)
+     4 个 result 态 (success/pending/failed/unknown):
+       success: 绿圆 + ✓ + 支付成功 + 描述 + auth-card + 「查看订单详情」+ 「返回首页」
+       pending: 橙圆 + ⏱ + 支付处理中 + 「我已支付」+ 「取消」
+       failed:  红圆 + ✕ + 支付失败 + 「重试支付」+ 「联系客服」
+       unknown: 灰圆 + ? + 订单状态未知 + （无 footer）
+     2026-08-30 P04 CTA bug fix 同批次：
+       - action-footer v2 (no slot) - 修复同款 slot style 隔离 bug
+       - 4 态按钮文案按 query.result 切换 -->
 <view class="page">
   <view class="content">
     <!-- Result block -->
@@ -26,16 +29,16 @@
       <view class="auth-hint">点击授权码可一键复制到剪贴板</view>
     </block>
 
-    <!-- Footer (unknown 态无 footer) -->
+    <!-- Footer (v2 no slot) - unknown 态无 footer -->
     <block wx:if="{{result !== 'unknown'}}">
-      <action-footer single="{{false}}">
-        <view slot="primary">
-          <button class="btn-primary" bindtap="onPrimary" hover-class="btn-primary--hover">{{primaryLabel}}</button>
-        </view>
-        <view slot="secondary">
-          <button class="btn-secondary" bindtap="onSecondary" hover-class="btn-secondary--hover">{{secondaryLabel}}</button>
-        </view>
-      </action-footer>
+      <action-footer
+        primary-label="{{primaryLabel}}"
+        primary-disabled="{{false}}"
+        secondary-label="{{secondaryLabel}}"
+        secondary-disabled="{{false}}"
+        bind:primary="onPrimary"
+        bind:secondary="onSecondary"
+      />
     </block>
   </view>
 </view>
