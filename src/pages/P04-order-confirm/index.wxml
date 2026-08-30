@@ -4,12 +4,11 @@
      状态：loadState='ready'（首屏默认；onLoad 可被 query 预填）
      按钮：始终 disabled 视觉（灰底 #E5E6EB）；onSubmit 早返 toast 与 5030 对齐 -->
 <view class="page">
-  <!-- Nav bar -->
-  <view class="nav">
-    <view class="back" bindtap="onBack">‹</view>
-    <view class="title">确认订单</view>
-    <view class="right"></view>
-  </view>
+  <!--
+    顶部 title 由 src/pages/P04-order-confirm/index.json 的 navigationBarTitleText
+    ("订单确认") 渲染为 WeChat 系统导航栏；不在 WXML 内重复自定义 .nav 块，
+    避免视觉上「订单确认」+「确认订单」两行重复（dispatch §coordinator fix 2026-08-30）。
+  -->
 
   <view class="content">
     <!-- Header card -->

@@ -53,15 +53,8 @@ Page({
         this.setData(updates);
       }
     }
-  },
-
-  onBack() {
-    wx.navigateBack({
-      delta: 1,
-      fail: () => {
-        // 无上一页时（P04 是入口页）保持不动；未来接入 tabBar 后切到 /pages/index/index
-      },
-    });
+    // 注：返回键由 WeChat 系统导航栏（左上角）自动处理 wx.navigateBack，
+    // 不再需要自定义 onBack（dispatch §coordinator fix 2026-08-30）。
   },
 
   onTapTier(e) {
