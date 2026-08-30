@@ -1,15 +1,11 @@
-<!-- P12 售后 / 服务协议页 — PANR-19 C5 high-fidelity
-     视觉对齐 issue 附件 p12-after-sales.html (v3 batch)
-     顶部 mode 切换：售后（默认） / 服务协议
-     mode=售后：
-       - apply-card (48×48 icon + 标题 + 描述 + 箭头)
-       - 联系客服按钮（蓝字）
-       - 常见问题入口（FAQ 折叠列表 3 行）
-       - Footer 主按钮「提交售后申请（未上线）」
-     mode=服务协议：
-       - 长文区：标题「会员服务协议」+ 多段落 (§1-§5) + 「...」结尾
-       - 无 apply-card / FAQ / 主按钮
-     系统 nav 由 index.json navigationBarTitleText 提供 -->
+<!-- P12 售后 / 服务协议页 — PANR-19 C5 high-fidelity (P0 组件化)
+     重构后：
+       - <banner tone="warn"> 替代 inline .banner.banner--warn
+       - <action-footer single=true> 替代 inline .footer + button
+     保留页面专属：
+       - .mode-bar (mode 切换；属 P1 候选 segmented-tabs)
+       - .apply-card / .contact-btn / .faq-list / .agreement 长文
+     系统 nav 由 index.json navigationBarTitleText "售后" 渲染 -->
 <view class="page">
   <!-- Mode tab -->
   <view class="mode-bar">
@@ -54,10 +50,17 @@
         </view>
       </view>
 
-      <!-- Footer -->
-      <view class="footer">
-        <button class="btn-primary" bindtap="onSubmit" disabled="{{true}}" hover-class="btn-primary--hover">提交售后申请（未上线）</button>
-      </view>
+      <!-- Footer (P0 组件化) -->
+      <action-footer single="{{true}}">
+        <view slot="primary">
+          <button
+            class="btn-primary"
+            bindtap="onSubmit"
+            disabled="{{true}}"
+            hover-class="btn-primary--hover"
+          >提交售后申请（未上线）</button>
+        </view>
+      </action-footer>
     </view>
   </block>
 

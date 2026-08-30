@@ -1,7 +1,7 @@
-/* P12 售后 / 服务协议页 — high-fidelity
- * 设计令牌：复用 P04 token（白底 / 16rpx 圆角 / #1677FF 主蓝）
- * 系统 nav 由 index.json navigationBarTitleText 提供
- */
+/* P12 售后 / 服务协议页 — high-fidelity (P0 组件化后)
+ * 移除 inline .footer + .btn-primary（已抽 action-footer）
+ * 移除 inline .banner--warn（已抽 banner 组件）
+ * 保留页面专属：mode-bar / apply-card / contact-btn / section-label / faq-list / agreement */
 
 .page {
   background: #F7F8FA;
@@ -168,18 +168,7 @@
   flex-shrink: 0;
 }
 
-/* Footer */
-.footer {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 14rpx 16rpx 28rpx;
-  background: #FFFFFF;
-  border-top: 1rpx solid #F0F1F3;
-  box-sizing: border-box;
-}
-
+/* 主按钮 (action-footer slot 内) */
 .btn-primary {
   width: 100%;
   height: 48rpx;
@@ -191,6 +180,7 @@
   font-weight: 500;
   letter-spacing: 0.5px;
   line-height: 48rpx;
+  margin: 0;
 }
 
 .btn-primary[disabled] {

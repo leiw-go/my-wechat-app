@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "售后",
-  "usingComponents": {}
+  "usingComponents": {
+    "action-footer": "/components/action-footer/index"
+  }
 }
