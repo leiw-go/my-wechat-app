@@ -1,27 +1,66 @@
-<!-- P11 续费下单页 — PANR-19 C5 payment-deferred -->
+<!-- P11 续费下单页 — PANR-19 C5 high-fidelity
+     视觉对齐 issue 附件 p11-renew.html (v3 batch)
+     与 P04 几乎一致，4 处差异：
+       1. 头卡副标橙色：「到期时间：2026-12-31 · 续费可叠加时长」(vs P04 商品副标)
+       2. 段标「选择续费档位」(vs P04「选择档位」)
+       3. Banner Info 蓝调 (#E8F3FF 底 / #1677FF 点) vs P04 橙 (#FFF4E5 / #FF7D00)
+       4. 默认选中 L (vs P04 M)
+       5. 主按钮文案「续费下单（未上线）」
+     系统 nav 由 index.json navigationBarTitleText 提供 -->
 <view class="page">
-  <view class="banner banner--warn">
-    <view class="banner__icon">⚠️</view>
-    <view class="banner__body">支付功能未启用</view>
-  </view>
+  <view class="content">
+    <!-- Header card -->
+    <view class="header-card">
+      <view class="cover"></view>
+      <view class="info">
+        <view class="name">{{goodsName}}</view>
+        <view class="subtitle subtitle--expire">{{expireLabel}}</view>
+      </view>
+    </view>
 
-  <view class="card">
-    <view class="card__title">续费 {{goodsName}}</view>
-    <view class="card__row">
-      <text class="card__label">当前套餐</text>
-      <text class="card__value">{{currentTier}}</text>
-    </view>
-    <view class="card__row">
-      <text class="card__label">到期时间</text>
-      <text class="card__value">{{expireAt}}</text>
-    </view>
-    <view class="card__row">
-      <text class="card__label">续费金额</text>
-      <text class="card__value card__value--price">¥ {{price}}</text>
-    </view>
-  </view>
+    <!-- Section label -->
+    <view class="section-label">选择续费档位</view>
 
-  <view class="footer">
-    <button class="btn btn--primary" bindtap="onSubmit">续费并支付（未上线）</button>
+    <!-- Tier vertical list -->
+    <view class="tier-list">
+      <view
+        wx:for="{{tiers}}"
+        wx:key="code"
+        class="tier-row {{item.code === selectedTier ? 'selected' : ''}}"
+        bindtap="onTapTier"
+        data-code="{{item.code}}"
+      >
+        <view class="badge">{{item.code}}</view>
+        <view class="meta">
+          <view class="name">{{item.name}}</view>
+          <view class="duration">{{item.duration}}</view>
+        </view>
+        <view class="price">¥{{item.price}}</view>
+        <view class="check"></view>
+      </view>
+    </view>
+
+    <!-- Banner: Info variant (vs P04 Warning 橙) -->
+    <view class="banner banner--info">
+      <view class="dot"></view>
+      <view class="text">{{bannerText}}</view>
+    </view>
+
+    <!-- Agreement row -->
+    <view class="agreement" bindtap="onToggleAgree">
+      <view class="checkbox {{agreed ? 'checked' : ''}}">
+        <text wx:if="{{agreed}}" class="checkbox__mark">✓</text>
+      </view>
+      <view class="text">我已阅读并同意<text class="link">《会员服务协议》</text></view>
+    </view>
+
+    <!-- Footer button (pinned) -->
+    <view class="footer">
+      <button
+        class="btn-primary {{agreed ? 'agreed' : ''}}"
+        disabled="{{true}}"
+        bindtap="onSubmit"
+      >续费下单（未上线）</button>
+    </view>
   </view>
 </view>
