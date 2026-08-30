@@ -1,26 +1,95 @@
-<!-- P07 订单详情页 — PANR-19 C5 payment-deferred -->
+<!-- P07 订单详情页 — PANR-19 C5 high-fidelity
+     视觉对齐 issue 附件 p07-order-detail.html (v3 batch)
+     payment-deferred 期间默认 loadState=error，HTML 直展示 error 空态；
+     loaded 态保留供 PANR-24 接入：
+       1. 订单状态卡 (订单号 + status badge + 金额大字)
+       2. 鉴权码卡 (B1 auth-code-card 嵌入)
+       3. 商品信息 (复用 P04 header-card)
+       4. 订单信息区: 创建时间 / 支付方式 / 订单号 / 授权码 (mask)
+       5. 历史码区块 (7 天缓冲)
+       6. 主按钮「查看授权码」+ 次按钮「申请售后」
+     系统 nav 由 index.json navigationBarTitleText 提供 -->
 <view class="page">
-  <!-- error 态：订单不存在 / 后端 404 / 未登录 -->
-  <view class="empty" wx:if="{{loadState === 'error' || !order}}">
-    <view class="empty__icon">📄</view>
-    <view class="empty__title">暂无订单详情</view>
-    <view class="empty__desc">支付功能未启用，暂无订单详情</view>
+  <!-- Error / empty state -->
+  <view wx:if="{{loadState === 'error' || !order}}" class="error-block">
+    <view class="error-icon">⚠</view>
+    <view class="error-title">订单加载失败</view>
+    <view class="error-desc">请检查网络后重试</view>
+    <button class="btn-primary" bindtap="onRetry" hover-class="btn-primary--hover">重新加载</button>
   </view>
 
-  <!-- loaded 态保留：未来支付恢复时可直接用 -->
-  <block wx:elif="{{loadState === 'loaded'}}">
-    <view class="detail">
-      <view class="detail__row">
-        <text class="detail__label">订单号</text>
-        <text class="detail__value">{{order.orderNo}}</text>
+  <!-- Loaded state -->
+  <view wx:else class="content">
+    <!-- 1. 订单状态卡 -->
+    <view class="status-card">
+      <view class="status-card__head">
+        <text class="order-no">订单号：{{order.orderNo}}</text>
+        <text class="badge badge--{{order.statusType}}">{{order.statusLabel}}</text>
       </view>
-      <view class="detail__row">
-        <text class="detail__label">状态</text>
-        <text class="detail__value">{{order.statusLabel}}</text>
+      <view class="status-card__amount">
+        <text class="amount-label">订单金额</text>
+        <text class="amount-value">¥{{order.amount}}</text>
       </view>
-
-      <!-- P8 入口隐藏：支付未启用时授权码不存在，原始按钮替换为 toast 拦截 -->
-      <button class="btn btn--secondary" bindtap="onViewAuthCode">查看授权码</button>
     </view>
-  </block>
+
+    <!-- 2. 鉴权码卡 (B1 组件嵌入) -->
+    <auth-code-card
+      code="{{order.authCode}}"
+      variant="{{order.authCodeVariant || 'default'}}"
+      expire-msg="{{order.authCodeExpireMsg}}"
+      bind:copy="onCopyAuthCode"
+      bind:reactivate="onReactivate"
+    />
+
+    <!-- 3. 商品信息 (复用 P04 header-card 视觉) -->
+    <view class="header-card">
+      <view class="cover"></view>
+      <view class="info">
+        <view class="name">{{order.goodsName}}</view>
+        <view class="subtitle">{{order.goodsSubtitle}}</view>
+      </view>
+    </view>
+
+    <!-- 4. 订单信息区 -->
+    <view class="info-block">
+      <view class="info-row">
+        <text class="info-row__label">创建时间</text>
+        <text class="info-row__value">{{order.createdAt}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-row__label">支付方式</text>
+        <text class="info-row__value">{{order.payChannel || '微信支付'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-row__label">订单号</text>
+        <text class="info-row__value">{{order.orderNo}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-row__label">授权码</text>
+        <text class="info-row__value info-row__value--mono">{{order.authCodeMask}}</text>
+      </view>
+    </view>
+
+    <!-- 5. 历史码区块 (7 天缓冲) -->
+    <view class="section-label">续费记录（7 天缓冲）</view>
+    <block wx:if="{{order.historyCodes && order.historyCodes.length > 0}}">
+      <view
+        wx:for="{{order.historyCodes}}"
+        wx:key="code"
+        class="history-row"
+      >
+        <text class="history-row__code">{{item.code}}</text>
+        <text class="history-row__time">{{item.expiredAt}}</text>
+      </view>
+    </block>
+    <view wx:else class="empty-history">
+      <text>暂无续费记录</text>
+    </view>
+
+    <!-- 6. Footer actions -->
+    <view class="footer">
+      <button class="btn-secondary" bindtap="onViewAuthCode" hover-class="btn-secondary--hover">查看授权码</button>
+      <button class="btn-primary" bindtap="onApplyAfterSales" hover-class="btn-primary--hover">申请售后</button>
+    </view>
+  </view>
 </view>
