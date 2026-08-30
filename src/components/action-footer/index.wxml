@@ -19,14 +19,14 @@
 <view class="action-footer {{noBorder ? 'action-footer--no-border' : ''}}">
   <button
     wx:if="{{primaryLabel}}"
-    class="action-footer__primary-btn {{primaryDisabled ? ? 'action-footer__primary-btn--disabled' : ''}}"
+    class="action-footer__primary-btn {{primaryDisabled ? 'action-footer__primary-btn--disabled' : ''}}"
     disabled="{{primaryDisabled}}"
     bindtap="onTapPrimary"
     hover-class="action-footer__primary-btn--hover"
   >{{primaryLabel}}</button>
   <button
     wx:if="{{secondaryLabel}}"
-    class="action-footer__secondary-btn {{secondaryDisabled ? ? 'action-footer__secondary-btn--disabled' : ''}}"
+    class="action-footer__secondary-btn {{secondaryDisabled ? 'action-footer__secondary-btn--disabled' : ''}}"
     disabled="{{secondaryDisabled}}"
     bindtap="onTapSecondary"
     hover-class="action-footer__secondary-btn--hover"
