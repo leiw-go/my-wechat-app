@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "订单详情",
   "usingComponents": {
-    "auth-code-card": "/components/auth-code-card/index"
+    "auth-code-card": "/components/auth-code-card/index",
+    "goods-header-card": "/components/goods-header-card/index",
+    "action-footer": "/components/action-footer/index"
   }
 }
