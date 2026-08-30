@@ -1,11 +1,14 @@
-<!-- P04 订单确认页 — PANR-19 C5 high-fidelity (P0 组件化)
+<!-- P04 订单确认页 — PANR-19 C5 high-fidelity (P0 组件化 v2)
      重构后：所有结构件改用 P0 组件（ADR-007 §二方案 3）
        - goods-header-card 商品头卡
        - tier-list 档位列表
        - banner (tone='warn') 提示
        - agreement-row 协议勾选行
-       - action-footer 底部固定区
-     页面 .wxss 仅保留 page padding / content padding / 间距微调
+       - action-footer 底部固定区（v2 移除 slot，内部渲染 button）
+     2026-08-30 派活响应：
+       - 应用 PM 视觉规格（橙 #FF7A45 / 12rpx / 17/600）→ ⚠ token 偏离 ADR-007 §三 baseline
+       - CTA 文案「立即开通 · 支付暂未上线」（payment-deferred 期）
+       - toast「支付功能开发中」（与 PRD v1.1 + 5030 降级口径一致）
      系统 nav 由 index.json navigationBarTitleText "订单确认" 渲染 -->
 <view class="page">
   <view class="content">
@@ -37,15 +40,11 @@
       bind:change="onAgreementChange"
     />
 
-    <!-- Footer -->
-    <action-footer single="{{true}}">
-      <view slot="primary">
-        <button
-          class="btn-primary {{agreed ? 'btn-primary--agreed' : ''}}"
-          disabled="{{true}}"
-          bindtap="onSubmit"
-        >提交订单（未上线）</button>
-      </view>
-    </action-footer>
+    <!-- Footer (P0 组件 v2 - no slot) -->
+    <action-footer
+      primary-label="立即开通 · 支付暂未上线"
+      primary-disabled="{{true}}"
+      bind:primary="onPrimary"
+    />
   </view>
 </view>

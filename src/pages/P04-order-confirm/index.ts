@@ -61,11 +61,8 @@ Page<PageData, Record<string, never>>({
     this.setData({ agreed });
   },
 
-  onSubmit() {
-    if (!this.data.agreed) {
-      wx.showToast({ title: '请先勾选协议', icon: 'none' });
-      return;
-    }
-    wx.showToast({ title: '支付功能未启用', icon: 'none' });
+  // PM 派活规格：toast「支付功能开发中」
+  onPrimary() {
+    wx.showToast({ title: '支付功能开发中', icon: 'none' });
   },
 });

@@ -2,18 +2,38 @@
 // 与 index.js 同源（PANR-24 引入构建工具链后 .ts 为 source of truth）
 
 interface ComponentData {
-  single: boolean;
+  primaryLabel: string;
+  primaryDisabled: boolean;
+  secondaryLabel: string;
+  secondaryDisabled: boolean;
   noBorder: boolean;
 }
 
 Component<ComponentData, Record<string, never>>({
   data: {
-    single: false,
+    primaryLabel: '',
+    primaryDisabled: true,
+    secondaryLabel: '',
+    secondaryDisabled: false,
     noBorder: false,
   },
 
   properties: {
-    single: { type: Boolean, value: false },
+    primaryLabel: { type: String, value: '' },
+    primaryDisabled: { type: Boolean, value: true },
+    secondaryLabel: { type: String, value: '' },
+    secondaryDisabled: { type: Boolean, value: false },
     noBorder: { type: Boolean, value: false },
+  },
+
+  methods: {
+    onTapPrimary() {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (this as any).triggerEvent('primary');
+    },
+    onTapSecondary() {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (this as any).triggerEvent('secondary');
+    },
   },
 });

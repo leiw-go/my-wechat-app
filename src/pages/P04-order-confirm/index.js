@@ -5,17 +5,16 @@
 //   - <tier-list>         档位列表
 //   - <banner tone="warn"> 提示
 //   - <agreement-row>     协议勾选
-//   - <action-footer>     底部固定区
+//   - <action-footer>     底部固定区（v2 内部渲染 button，无 slot）
 // 数据契约与原 P04 保持一致；事件绑定方式从内联 bindtap 改为组件事件。
 //
-// 视觉对齐 issue 附件 p04.html（v2 已 P04 单独 sign-off, 2026-08-30T10:55）。
+// 2026-08-30 派活响应（PM 视觉规格）：
+//   - CTA 文案「立即开通 · 支付暂未上线」
+//   - 点击 toast「支付功能开发中」（与 PANR-21 PRD v1.1 + 5030 降级一致）
 //
 // 状态机：
 //   selectedTier (string)  当前选中档位 code
-//   agreed (boolean)      协议勾选状态（来自 agreement-row change 事件）
-//
-// 支付路径（payment-deferred）：
-//   onSubmit → 早返 wx.showToast('支付功能未启用')
+//   agreed (boolean)      协议勾选状态
 
 const GOODS = {
   name: '会员小程序 SaaS',
@@ -60,11 +59,8 @@ Page({
     this.setData({ agreed });
   },
 
-  onSubmit() {
-    if (!this.data.agreed) {
-      wx.showToast({ title: '请先勾选协议', icon: 'none' });
-      return;
-    }
-    wx.showToast({ title: '支付功能未启用', icon: 'none' });
+  // action-footer 主按钮点击（PM 派活规格：toast「支付功能开发中」）
+  onPrimary() {
+    wx.showToast({ title: '支付功能开发中', icon: 'none' });
   },
 });

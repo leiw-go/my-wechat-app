@@ -1,11 +1,14 @@
-/* P04 订单确认页 — 重构后页面样式（仅留 page-level 间距 + 主按钮）
+/* P04 订单确认页 — 重构后页面样式（仅留 page-level 间距）
  * 所有结构件样式已抽到 src/components/ 下：
  *   - .header-card         → goods-header-card
  *   - .tier-list / .tier-row → tier-list
  *   - .banner               → banner (tone='warn')
  *   - .agreement            → agreement-row
- *   - .footer / .btn-primary  → action-footer + 页面内 .btn-primary override
- * 设计令牌完全对齐 ADR-007 §三 */
+ *   - .footer / .btn-primary  → action-footer (v2 内部渲染，无 slot)
+ *
+ * 设计令牌完全对齐 ADR-007 §三；
+ * 主按钮视觉规格（橙 #FF7A45 / 12rpx / 17/600）在 action-footer.wxss 内，
+ * 该 3 项偏离 baseline 待 ADR-007 v2.1 裁定 */
 
 .page {
   background: #F7F8FA;
@@ -25,24 +28,4 @@
   color: #4E5969;
   font-weight: 500;
   margin: 16rpx 4rpx 8rpx;
-}
-
-/* 主按钮（action-footer slot 内的 button） */
-.btn-primary {
-  width: 100%;
-  height: 48rpx;
-  background: #E5E6EB;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 16rpx;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  line-height: 48rpx;
-  margin: 0;
-}
-
-.btn-primary[disabled] {
-  background: #E5E6EB;
-  color: #FFFFFF;
 }
