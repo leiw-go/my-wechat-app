@@ -6,6 +6,30 @@
 
 本迭代 **支付功能砍掉**，仅验证主流程在测试环境能否起来。
 
+## 后端 baseURL — Option B'（PM 二次拍板）
+
+外网入口走 nginx 反代，**严禁**再回到直连 `43.143.244.13:3000`（外网 3000 端口云安全组拦截，已确认）。
+
+| 项 | 值 |
+|---|---|
+| baseURL | `https://yaowen.store/panr-api` |
+| nginx 行为 | `/panr-api/*` strip 前缀 → `proxy_pass http://127.0.0.1:3000/` |
+| 协议 | HTTPS（接近生产语义） |
+| 环境变量 | `VITE_API_BASE_URL`（详见 `.env.example`） |
+
+**WeChat 开发者工具要求**（测试 AppID `wxde0c66d012c15d87` 未走 ICP 业务域名流程）：
+
+- ⚠️ **必须勾选「不校验合法域名」**（开发者工具 → 详情 → 本地设置 → 不校验合法域名...）
+- 否则真机预览会因域名未备案被微信拦截
+
+## 本地启动
+
+```bash
+cp .env.example .env       # 拷贝环境模板（.env 已被 gitignore 忽略）
+# 按需覆盖 VITE_API_BASE_URL / VITE_WX_APPID 等
+# 微信开发者工具导入项目后勾选「不校验合法域名」
+```
+
 ### 主流程可访问页面
 
 | 页面 | 状态 | 接口 |
