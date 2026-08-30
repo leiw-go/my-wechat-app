@@ -1,0 +1,14 @@
+<!-- agreement-row 组件 — PANR-19 C5 P1 组件 (ADR-007 §二 #4)
+     视觉对齐 P04 / P11 .agreement 块（合规必勾，独立组件便于单测）
+     Props:
+       checked    当前勾选状态
+       text       协议前缀文本（如 "我已阅读并同意"）
+       linkText   链接文本（如 "《会员服务协议》"）
+     Events:
+       bind:change  勾选变更，detail = { checked } -->
+<view class="agreement-row" bindtap="onTapRow">
+  <view class="agreement-row__checkbox {{checked ? 'agreement-row__checkbox--checked' : ''}}">
+    <text wx:if="{{checked}}" class="agreement-row__mark">✓</text>
+  </view>
+  <view class="agreement-row__text">{{text}}<text class="agreement-row__link" catchtap="onTapLink">{{linkText}}</text></view>
+</view>

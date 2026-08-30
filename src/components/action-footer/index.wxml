@@ -1,0 +1,17 @@
+<!-- action-footer 组件 — PANR-19 C5 P0 组件 (ADR-007 §二 #5)
+     视觉对齐 P04/P11/P12 footer pattern
+     Slot:
+       primary   主按钮（默认 disabled 灰「未上线」）；父页面用 <view slot="primary">...</view>
+       secondary 次按钮（可选）；父页面用 <view slot="secondary">...</view>
+     Props:
+       single     是否单按钮模式 (default false 双按钮) - P04/P11 只有主按钮
+       noBorder   是否隐藏顶部 border (default false)
+     系统 nav 由各使用页的 navigationBarTitleText 提供；本组件提供底部 footer 样式 -->
+<view class="action-footer {{noBorder ? 'action-footer--no-border' : ''}}">
+  <view class="action-footer__primary">
+    <slot name="primary"></slot>
+  </view>
+  <view wx:if="{{!single}}" class="action-footer__secondary">
+    <slot name="secondary"></slot>
+  </view>
+</view>

@@ -1,0 +1,108 @@
+/* tier-list — ADR-007 §三 token 落地
+ * bg-card #FFFFFF / border-1 #E5E6EB / radius-card 16rpx
+ * tier-row 64h + border-3 #F2F3F5 divider
+ * selected 态：bg-tint #F0F5FF + inset 3rpx 蓝条 #1677FF
+ * badge 32×32 (selected 蓝底白字 / default #F2F3F5 底 + #4E5969 字)
+ * price 15/600 #1D2129
+ * check 18×18 (selected #1677FF 蓝圆 + 白勾 / default 灰边) */
+
+.tier-list {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  border: 1rpx solid #E5E6EB;
+  overflow: hidden;
+}
+
+.tier-row {
+  height: 64rpx;
+  padding: 0 14rpx;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  border-bottom: 1rpx solid #F2F3F5;
+}
+
+.tier-row:last-child {
+  border-bottom: none;
+}
+
+.tier-row--hover {
+  background: #F7F8FA;
+}
+
+.tier-row--selected {
+  background: #F0F5FF;
+  box-shadow: inset 3rpx 0 0 #1677FF;
+  padding-left: 11rpx;
+}
+
+.tier-row__badge {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 8rpx;
+  background: #F2F3F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4E5969;
+  flex-shrink: 0;
+}
+
+.tier-row--selected .tier-row__badge {
+  background: #1677FF;
+  color: #FFFFFF;
+}
+
+.tier-row__meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.tier-row__name {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #1D2129;
+}
+
+.tier-row__duration {
+  font-size: 12px;
+  color: #86909C;
+  margin-top: 2rpx;
+  line-height: 1.4;
+}
+
+.tier-row__price {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1D2129;
+  flex-shrink: 0;
+}
+
+.tier-row__check {
+  width: 18rpx;
+  height: 18rpx;
+  border: 1.5rpx solid #C9CDD4;
+  border-radius: 50%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.tier-row--selected .tier-row__check {
+  border-color: #1677FF;
+  background: #1677FF;
+}
+
+.tier-row--selected .tier-row__check::after {
+  content: "";
+  position: absolute;
+  left: 4rpx;
+  top: 1rpx;
+  width: 5rpx;
+  height: 9rpx;
+  border: solid #FFFFFF;
+  border-width: 0 1.5rpx 1.5rpx 0;
+  transform: rotate(45deg);
+}

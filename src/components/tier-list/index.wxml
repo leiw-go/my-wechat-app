@@ -1,0 +1,26 @@
+<!-- tier-list 组件 — PANR-19 C5 P0 组件 (ADR-007 §二 #2)
+     视觉对齐 P04 tier-list pattern
+     Props:
+       tiers        [{ code, name, duration, price }]
+       selectedCode 当前选中档位 code (default 'M')
+     Events:
+       bind:select  选中变更，detail = { code }
+     内部自渲染 tier-row（避免双组件嵌套；简化 API） -->
+<view class="tier-list">
+  <view
+    wx:for="{{tiers}}"
+    wx:key="code"
+    class="tier-row {{item.code === selectedCode ? 'tier-row--selected' : ''}}"
+    bindtap="onTapRow"
+    data-code="{{item.code}}"
+    hover-class="tier-row--hover"
+  >
+    <view class="tier-row__badge">{{item.code}}</view>
+    <view class="tier-row__meta">
+      <view class="tier-row__name">{{item.name}}</view>
+      <view class="tier-row__duration">{{item.duration}}</view>
+    </view>
+    <view class="tier-row__price">¥{{item.price}}</view>
+    <view class="tier-row__check"></view>
+  </view>
+</view>

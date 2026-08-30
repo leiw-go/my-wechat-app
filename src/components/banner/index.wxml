@@ -1,0 +1,15 @@
+<!-- banner 组件 — PANR-19 C5 P0 组件 (ADR-007 §二 #3)
+     视觉对齐 P04 .banner.warn + p11-renew .banner--info + p05 4 态颜色参考
+     Props:
+       tone  'info' | 'warn' | 'success' | 'error'
+       text  提示文本
+       dot   是否显示左侧色点 (default true)
+     4 色调色板 (ADR-007 §三):
+       info    bg #E8F3FF + dot/text #1677FF
+       warn    bg #FFF4E5 + dot/text #FF7D00
+       success bg #E6F8E9 + dot/text #00B42A
+       error   bg #FFECEC + dot/text #F53F3F -->
+<view class="banner banner--{{tone || 'info'}}">
+  <view wx:if="{{dot !== false}}" class="banner__dot"></view>
+  <view class="banner__text">{{text}}</view>
+</view>

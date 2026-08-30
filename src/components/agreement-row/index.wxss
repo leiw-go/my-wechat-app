@@ -1,0 +1,47 @@
+/* agreement-row — ADR-007 §三 token 落地
+ * checkbox 18×18 + 1.5rpx #C9CDD4 边 / checked #1677FF 蓝底
+ * text 13px / link #1677FF */
+
+.agreement-row {
+  min-height: 48rpx;
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 8rpx 4rpx;
+  box-sizing: border-box;
+}
+
+.agreement-row__checkbox {
+  width: 18rpx;
+  height: 18rpx;
+  border: 1.5rpx solid #C9CDD4;
+  border-radius: 4rpx;
+  flex-shrink: 0;
+  background: #FFFFFF;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agreement-row__checkbox--checked {
+  border-color: #1677FF;
+  background: #1677FF;
+}
+
+.agreement-row__mark {
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.agreement-row__text {
+  font-size: 13px;
+  color: #4E5969;
+  line-height: 1.4;
+}
+
+.agreement-row__link {
+  color: #1677FF;
+}

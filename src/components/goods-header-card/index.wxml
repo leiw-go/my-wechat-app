@@ -1,0 +1,15 @@
+<!-- goods-header-card 组件 — PANR-19 C5 P0 组件（ADR-007 §二 #1）
+     视觉对齐 P04 header-card pattern；P11 / P07 success / P3 商品详情复用
+     Props:
+       name         商品名称
+       subtitle     副标题（商品副标 / 到期时间 等）
+       subtitleTone 副标题色调：'gray' (商品副标 #86909C) / 'warn' (到期 #FF7D00)
+       cover        封面 (默认 SaaS 渐变占位)
+     系统 nav 由各使用页的 navigationBarTitleText 提供 -->
+<view class="goods-header-card">
+  <view class="goods-header-card__cover">{{cover}}</view>
+  <view class="goods-header-card__info">
+    <view class="goods-header-card__name">{{name}}</view>
+    <view class="goods-header-card__subtitle goods-header-card__subtitle--{{subtitleTone || 'gray'}}">{{subtitle}}</view>
+  </view>
+</view>
