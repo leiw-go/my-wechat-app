@@ -1,25 +1,77 @@
-<!-- P12 售后页 — PANR-19 C5 payment-deferred -->
+<!-- P12 售后 / 服务协议页 — PANR-19 C5 high-fidelity
+     视觉对齐 issue 附件 p12-after-sales.html (v3 batch)
+     顶部 mode 切换：售后（默认） / 服务协议
+     mode=售后：
+       - apply-card (48×48 icon + 标题 + 描述 + 箭头)
+       - 联系客服按钮（蓝字）
+       - 常见问题入口（FAQ 折叠列表 3 行）
+       - Footer 主按钮「提交售后申请（未上线）」
+     mode=服务协议：
+       - 长文区：标题「会员服务协议」+ 多段落 (§1-§5) + 「...」结尾
+       - 无 apply-card / FAQ / 主按钮
+     系统 nav 由 index.json navigationBarTitleText 提供 -->
 <view class="page">
-  <!-- 仅 after-sales 模式加 warn banner（agreement 模式是法务条款展示，与支付无关） -->
+  <!-- Mode tab -->
+  <view class="mode-bar">
+    <view
+      wx:for="{{modes}}"
+      wx:key="key"
+      class="mode {{mode === item.key ? 'mode--active' : ''}}"
+      bindtap="onSwitchMode"
+      data-key="{{item.key}}"
+    >{{item.label}}</view>
+  </view>
+
+  <!-- mode=after-sales -->
   <block wx:if="{{mode === 'after-sales'}}">
-    <view class="banner banner--warn">
-      <view class="banner__icon">⚠️</view>
-      <view class="banner__body">支付功能未启用</view>
+    <view class="content">
+      <!-- Apply card -->
+      <view class="apply-card" bindtap="onTapApplyCard" hover-class="apply-card--hover">
+        <view class="apply-card__icon">🛠</view>
+        <view class="apply-card__info">
+          <view class="apply-card__title">申请售后</view>
+          <view class="apply-card__desc">提交退款 / 换货 / 申诉工单</view>
+        </view>
+        <view class="apply-card__arrow">›</view>
+      </view>
+
+      <!-- Contact button -->
+      <view class="contact-btn" bindtap="onContactCs" hover-class="contact-btn--hover">联系客服 · 工作日 9:00-18:00</view>
+
+      <!-- Section label + FAQ list -->
+      <view class="section-label">常见问题</view>
+      <view class="faq-list">
+        <view
+          wx:for="{{faqs}}"
+          wx:key="id"
+          class="faq-row"
+          bindtap="onTapFaq"
+          data-id="{{item.id}}"
+          hover-class="faq-row--hover"
+        >
+          <text class="faq-row__q">{{item.q}}</text>
+          <text class="faq-row__arrow">›</text>
+        </view>
+      </view>
+
+      <!-- Footer -->
+      <view class="footer">
+        <button class="btn-primary" bindtap="onSubmit" disabled="{{true}}" hover-class="btn-primary--hover">提交售后申请（未上线）</button>
+      </view>
     </view>
   </block>
 
+  <!-- mode=agreement -->
   <block wx:if="{{mode === 'agreement'}}">
     <view class="agreement">
-      <view class="agreement__title">服务条款</view>
-      <view class="agreement__body">{{agreementText}}</view>
-    </view>
-  </block>
-
-  <block wx:else>
-    <view class="aftersales">
-      <view class="aftersales__title">售后申请</view>
-      <view class="aftersales__desc">支付功能未启用，售后工单暂不开放自助提交，请联系人工客服。</view>
-      <button class="btn btn--secondary" bindtap="onContactCs">联系人工客服</button>
+      <view class="agreement__title">会员服务协议</view>
+      <view class="agreement__body">
+        <view wx:for="{{agreementSections}}" wx:key="id" class="agreement__section">
+          <text class="agreement__h">{{item.h}}</text>
+          <text class="agreement__p">{{item.body}}</text>
+        </view>
+        <view class="agreement__ellipsis">…</view>
+      </view>
     </view>
   </block>
 </view>
