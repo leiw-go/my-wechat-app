@@ -1,0 +1,37 @@
+/* P05 支付结果页 — page-specific styles
+ * .banner* 已在 global.wxss，本文件只补 result* BEM 块
+ */
+
+.page {
+  padding: 0 0 48rpx 0;
+}
+
+.result {
+  margin: 24rpx;
+  padding: 32rpx 24rpx;
+  border-radius: 12rpx;
+  background: #ffffff;
+  text-align: center;
+}
+
+.result__icon {
+  font-size: 64rpx;
+  line-height: 1;
+  margin-bottom: 16rpx;
+}
+
+.result__title {
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.result__desc {
+  font-size: 26rpx;
+  color: #86909c;
+}
+
+.result--success { border-top: 6rpx solid #00b42a; }
+.result--pending { border-top: 6rpx solid #ff7d00; }
+.result--failed  { border-top: 6rpx solid #f53f3f; }
+.result--unknown { border-top: 6rpx solid #c9cdd4; }
