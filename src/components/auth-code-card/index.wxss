@@ -1,0 +1,153 @@
+/* auth-code-card 组件样式 — 对齐 auth-code-card.html (v3)
+ * 设计令牌复用 P04 token：
+ *   - 白底 #FFFFFF / 边框 #E5E6EB / 圆角 16rpx
+ *   - 主蓝 #1677FF / 成功绿 #00B42A / 失效灰 #C9CDD4
+ *   - 字体 PingFang SC + monospace (SF Mono / Menlo / Consolas)
+ */
+
+/* Block — base */
+.auth-card {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 18rpx 16rpx;
+  border: 1rpx solid #E5E6EB;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.auth-card .auth-label {
+  font-size: 12px;
+  color: #86909C;
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 1.4;
+}
+
+.auth-card .auth-label .label-text {
+  color: #86909C;
+  font-size: 12px;
+}
+
+.auth-card .auth-label .copy {
+  color: #1677FF;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4rpx;
+  font-weight: 500;
+}
+
+.auth-card .auth-label .copy::before {
+  content: "⎘";
+  font-size: 14px;
+}
+
+.auth-card .auth-label .copy--hover {
+  opacity: 0.6;
+}
+
+.auth-card .auth-label .copy--disabled {
+  color: #C9CDD4;
+  pointer-events: none;
+}
+
+.auth-card .auth-label .copy--hidden {
+  visibility: hidden;
+}
+
+.auth-card .auth-code {
+  font-family: "SF Mono", "Menlo", "Consolas", monospace;
+  font-size: 18px;
+  color: #1D2129;
+  background: #F7F8FA;
+  padding: 14rpx 12rpx;
+  border-radius: 12rpx;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+/* Variant: copied */
+.auth-card--copied .auth-label .state {
+  color: #00B42A;
+  display: inline-flex;
+  align-items: center;
+  gap: 4rpx;
+  font-weight: 500;
+}
+
+.auth-card--copied .auth-label .state__dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #00B42A;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+  margin-right: 2rpx;
+}
+
+.auth-card--copied .auth-code {
+  background: #E6F8E9;
+  color: #00B42A;
+}
+
+/* Variant: expired */
+.auth-card--expired {
+  background: #F2F3F5;
+  border-color: #E5E6EB;
+}
+
+.auth-card--expired .auth-label {
+  color: #86909C;
+}
+
+.auth-card--expired .auth-code {
+  background: #FFFFFF;
+  color: #86909C;
+  text-decoration: line-through;
+  text-decoration-color: #C9CDD4;
+  text-decoration-thickness: 1.5px;
+}
+
+.auth-card--expired .auth-overlay {
+  position: relative;
+  margin-top: 12rpx;
+  padding: 10rpx 12rpx;
+  background: #FFFFFF;
+  border: 1rpx dashed #C9CDD4;
+  border-radius: 10rpx;
+  text-align: center;
+  font-size: 12px;
+  color: #4E5969;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+
+.auth-card--expired .auth-overlay .overlay-text {
+  display: block;
+  margin-bottom: 6rpx;
+}
+
+.auth-card--expired .auth-overlay .btn-mini {
+  display: inline-block;
+  padding: 4rpx 12rpx;
+  background: #1677FF;
+  color: #FFFFFF;
+  border-radius: 10rpx;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.auth-card--expired .auth-overlay .btn-mini:active {
+  opacity: 0.85;
+}

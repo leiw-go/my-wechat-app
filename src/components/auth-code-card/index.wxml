@@ -1,0 +1,49 @@
+<!-- auth-code-card 组件 — PANR-19 C5 high-fidelity
+     视觉对齐 issue 附件 auth-code-card.html (v3 batch)
+     3 个 variants (default / copied / expired) 用 BEM modifier 实现
+     单击「复制」触发自定义事件 copy（父页面绑定调 wx.setClipboardData）
+     单击「重新激活」触发自定义事件 reactivate（父页面跳转 P04）
+
+     复用范围:
+       - P05 支付结果页 (success 态嵌入)
+       - P07 订单详情页 (订单状态卡 + 鉴权码区)
+       - P08 授权码详情页 (后续 Phase C)
+
+     数据契约:
+       - code: string       鉴权码（30 字符 MEMB-M-XXXX-XXXX-XXXX-XXXX-XYZW）
+       - variant: string    default / copied / expired
+       - expireMsg: string  失效文案（expired 态显示）
+       - copyHint: string   卡内「点击复制」提示（default 态显示，可选）
+
+     系统 nav 由各使用页的 navigationBarTitleText 提供；本组件不重复 title -->
+<view class="auth-card auth-card--{{variant || 'default'}}">
+  <view class="auth-label">
+    <block wx:if="{{variant === 'copied'}}">
+      <view class="state">
+        <text class="state__dot">✓</text>
+        <text>已复制</text>
+      </view>
+    </block>
+    <block wx:else>
+      <text class="label-text">{{copyHint || '授权码'}}</text>
+    </block>
+    <text
+      wx:if="{{variant !== 'expired'}}"
+      class="copy {{variant === 'copied' ? 'copy--disabled' : ''}}"
+      bindtap="onCopy"
+      hover-class="copy--hover"
+      hover-stay-time="60"
+    >复制</text>
+    <text
+      wx:else
+      class="copy copy--hidden"
+    >复制</text>
+  </view>
+
+  <view class="auth-code">{{code}}</view>
+
+  <view wx:if="{{variant === 'expired'}}" class="auth-overlay">
+    <view class="overlay-text">{{expireMsg || '授权码已失效（7 天缓冲已结束）'}}</view>
+    <view class="btn-mini" bindtap="onReactivate">重新激活</view>
+  </view>
+</view>
