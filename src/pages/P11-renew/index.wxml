@@ -1,12 +1,15 @@
-<!-- P11 续费下单页 — PANR-19 C5 high-fidelity (P0 组件化)
-     与 P04 95% 相似，复用同一套 P0 组件 + 调整 3 处：
-       - subtitle-tone=\"warn\" (到期时间橙) vs P04 \"gray\"
-       - banner tone=\"info\" 蓝调 vs P04 \"warn\" 橙
-       - selectedTier 默认 'L' vs P04 'M'
-     系统 nav 由 index.json navigationBarTitleText \"续费\" 渲染 -->
+<!-- P11 续费下单页 — PANR-19 C5 high-fidelity (P0 组件化 v2)
+     与 P04 95% 相似，套同一套 P0 组件 + 调整 3 处：
+       - subtitle-tone=\"warn\" (到期时间橙)
+       - banner tone=\"info\" 蓝调
+       - selectedTier 默认 'L'
+     2026-08-30 P04 CTA bug fix 同批次：
+       - action-footer v2 (no slot, 内部渲染 button) - 修复同款 slot style 隔离 bug
+       - CTA 文案「续费下单 · 支付暂未上线」(purchase CTA 跟 PM 规格)
+     系统 nav 由 index.json navigationBarTitleText "续费" 渲染 -->
 <view class="page">
   <view class="content">
-    <!-- Header card (到期时间 → subtitle-tone=warn) -->
+    <!-- Header card -->
     <goods-header-card
       name="{{goodsName}}"
       subtitle="{{expireLabel}}"
@@ -16,7 +19,7 @@
     <!-- Section label -->
     <view class="section-label">选择续费档位</view>
 
-    <!-- Tier list (默认 L 选中) -->
+    <!-- Tier list -->
     <tier-list
       tiers="{{tiers}}"
       selected-code="{{selectedTier}}"
@@ -34,15 +37,11 @@
       bind:change="onAgreementChange"
     />
 
-    <!-- Footer -->
-    <action-footer single="{{true}}">
-      <view slot="primary">
-        <button
-          class="btn-primary {{agreed ? 'btn-primary--agreed' : ''}}"
-          disabled="{{true}}"
-          bindtap="onSubmit"
-        >续费下单（未上线）</button>
-      </view>
-    </action-footer>
+    <!-- Footer (v2 no slot) -->
+    <action-footer
+      primary-label="续费下单 · 支付暂未上线"
+      primary-disabled="{{true}}"
+      bind:primary="onPrimary"
+    />
   </view>
 </view>

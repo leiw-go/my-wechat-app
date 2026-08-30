@@ -1,11 +1,5 @@
-/* P11 续费下单页 — 重构后页面样式（仅留 page-level 间距 + 主按钮）
- * 所有结构件样式已抽到 src/components/ 下：
- *   - .header-card         → goods-header-card (subtitle-tone=warn)
- *   - .tier-list / .tier-row → tier-list
- *   - .banner--info        → banner (tone='info')
- *   - .agreement            → agreement-row
- *   - .footer / .btn-primary  → action-footer + 页面内 .btn-primary override
- * 设计令牌完全对齐 ADR-007 §三 */
+/* P11 续费下单页 — 重构后页面样式（仅留 page-level 间距）
+ * 所有结构件样式已抽到 src/components/ 下 */
 
 .page {
   background: #F7F8FA;
@@ -19,30 +13,9 @@
   padding: 4px 16px 16px;
 }
 
-/* Section label — 页面专属 */
 .section-label {
   font-size: 13px;
   color: #4E5969;
   font-weight: 500;
   margin: 16rpx 4rpx 8rpx;
-}
-
-/* 主按钮（action-footer slot 内） */
-.btn-primary {
-  width: 100%;
-  height: 48rpx;
-  background: #E5E6EB;
-  color: #FFFFFF;
-  border: none;
-  border-radius: 16rpx;
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  line-height: 48rpx;
-  margin: 0;
-}
-
-.btn-primary[disabled] {
-  background: #E5E6EB;
-  color: #FFFFFF;
 }

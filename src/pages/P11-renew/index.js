@@ -1,14 +1,9 @@
 // P11 续费下单页 — PANR-19 C5 high-fidelity (DevTools-loadable .js)
 //
-// 重构后：所有结构件改用 P0 组件（ADR-007 §二方案 3）
-// 与 P04 95% 相似（subtitle-tone=warn / banner tone=info / 默认 selectedTier='L'）
-//
-// 状态机：
-//   selectedTier (string) 当前选中档位 (默认 'L')
-//   agreed (boolean)     协议勾选状态
-//
-// 支付路径（payment-deferred）：
-//   onSubmit → 早返 wx.showToast('支付功能未启用')
+// 2026-08-30 派活响应（与 P04 同款）：
+//   - action-footer v2 (no slot)
+//   - CTA 文案「续费下单 · 支付暂未上线」
+//   - 点击 toast「支付功能开发中」（PM 规格；purchase CTA 统一口径）
 
 const GOODS_NAME_DEFAULT = '会员小程序 SaaS';
 const EXPIRE_LABEL_DEFAULT = '到期时间：2026-12-31 · 续费可叠加时长';
@@ -26,7 +21,7 @@ Page({
     expireLabel: EXPIRE_LABEL_DEFAULT,
     bannerText: BANNER_TEXT_DEFAULT,
     tiers: TIERS,
-    selectedTier: 'L', // P11 默认 L (vs P04 M)
+    selectedTier: 'L',
     agreed: false,
   },
 
@@ -41,24 +36,18 @@ Page({
     if (Object.keys(updates).length > 0) this.setData(updates);
   },
 
-  // tier-list 组件广播事件
   onTapTier(e) {
     const code = e && e.detail && e.detail.code;
     if (!code || !TIERS.some(t => t.code === code)) return;
     this.setData({ selectedTier: code });
   },
 
-  // agreement-row 组件广播事件
   onAgreementChange(e) {
     const agreed = !!(e && e.detail && e.detail.checked);
     this.setData({ agreed });
   },
 
-  onSubmit() {
-    if (!this.data.agreed) {
-      wx.showToast({ title: '请先勾选协议', icon: 'none' });
-      return;
-    }
-    wx.showToast({ title: '支付功能未启用', icon: 'none' });
+  onPrimary() {
+    wx.showToast({ title: '支付功能开发中', icon: 'none' });
   },
 });
