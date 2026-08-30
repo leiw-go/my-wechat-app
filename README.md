@@ -34,17 +34,19 @@ cp .env.example .env       # 拷贝环境模板（.env 已被 gitignore 忽略�
 
 | 页面 | 状态 | 接口 |
 |---|---|---|
-| P1 首页 | ✅ 全功能 | `GET /api/goods/list` + `GET /api/category/list` |
+| P1 首页 | ⏳ PANR-24 计划落 | PANR-24 子任务；本期未交付 |
 | P2 搜索 | ✅ 全功能 | `GET /api/goods/search` |
-| P3 商品详情 | ✅ 全功能 | `GET /api/goods/detail/:id` |
+| P3 商品详情 | ⏳ PANR-24 计划落 | PANR-24 子任务；本期未交付 |
 | P4 唤起支付 | ⚠️ 占位 | "支付功能未启用" |
 | P5 支付结果 | ⚠️ 占位 | 同上 |
 | P6 我的订单 | ⚠️ 空态 | 无真实订单数据 |
 | P7 订单详情 | ⚠️ 空态 | 同上 |
 | P8 授权码详情 | ❌ 隐藏入口 | 无授权码数据 |
-| P9 个人中心 | ✅ 全功能 | `GET /api/me/info` |
-| P10 客服 | ✅ 全功能 | 微信原生 |
+| P9 个人中心 | ⏳ PANR-24 计划落 | PANR-24 子任务；本期未交付 |
+| P10 客服 | ⏳ PANR-24 计划落 | PANR-24 子任务；本期未交付 |
 | P11/P12 | ⚠️ 占位 | "支付功能未启用" |
+
+> **承诺兑现声明**：本表状态以 `#commit SHA` + `src/` 实际文件内容为准；**本迭代未交付项不假装 ✓**。P1/P3/P9/P10 已纠正为「⏳ PANR-24 计划落」；C5 范围焦点为 `test-env-min-startup` + `scope=payment-deferred`，完整功能在 PANR-24 落地。
 
 ## 目录结构
 
