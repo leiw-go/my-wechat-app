@@ -26,7 +26,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 14rpx 16rpx 28rpx;
+  padding: 20rpx 32rpx 40rpx; /* 对齐 HTML v3.2 .footer 14px 16px 28px → 28rpx 32rpx 56rpx (取略小); 下方留 home-indicator 安全区 */
   background: #FFFFFF;
   border-top: 1rpx solid #F0F1F3;
   box-sizing: border-box;
@@ -40,15 +40,15 @@
 /* 主按钮 — active 态 (token accent/primary) */
 .action-footer__primary-btn {
   width: 100%;
-  height: 48rpx;
+  height: 96rpx; /* 48px tap target on 375rpx screen — CTA 标准 */
   background: #FF7A45; /* accent/primary */
   color: #FFFFFF;
   border: none;
-  border-radius: 12rpx; /* accent/primary-radius */
-  font-size: 17px; /* accent/primary-type 字 */
+  border-radius: 16rpx; /* accent/primary-radius — 对齐 HTML v3.2 */
+  font-size: 34rpx; /* accent/primary-type = 17/600 — 对齐 HTML v3.2 .btn-primary 17px */
   font-weight: 600; /* accent/primary-type 字重 */
-  letter-spacing: 0.5px;
-  line-height: 48rpx;
+  letter-spacing: 1rpx;
+  line-height: 96rpx; /* = height, 避免文字被裁 */
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -66,15 +66,15 @@
 /* 次按钮 — 与主 CTA 同 12rpx 圆角（v2.1 一致规格） */
 .action-footer__secondary-btn {
   width: 100%;
-  height: 44rpx;
+  height: 88rpx; /* 44px tap target on 375rpx screen — 次级 CTA 标准 */
   background: #FFFFFF;
   color: #4E5969;
   border: 1rpx solid #E5E6EB;
-  border-radius: 12rpx;
-  font-size: 14px;
+  border-radius: 16rpx;
+  font-size: 30rpx; /* 15/500 — 对齐 HTML v3.2 .btn-secondary */
   font-weight: 500;
-  line-height: 44rpx;
-  margin: 12rpx 0 0;
+  line-height: 88rpx; /* = height */
+  margin: 16rpx 0 0;
   padding: 0;
   box-sizing: border-box;
 }

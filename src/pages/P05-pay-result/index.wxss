@@ -5,49 +5,49 @@
 .page {
   background: #F7F8FA;
   min-height: 100vh;
-  padding-bottom: 200rpx;
+  padding-bottom: 240rpx; /* 200rpx → 240rpx (action-footer 现约 220rpx 高 + 安全区) */
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
   color: #1D2129;
 }
 
 .content {
-  padding: 16rpx 16rpx 16rpx;
+  padding: 32rpx; /* 16rpx → 32rpx */
 }
 
 /* Result block — 4 态统一白卡（页面专属） */
 .result-block {
   text-align: center;
-  padding: 32rpx 16rpx 32rpx;
+  padding: 64rpx 32rpx 64rpx; /* 32rpx 16rpx → 64rpx 32rpx */
   background: #FFFFFF;
-  border-radius: 16rpx;
-  margin-bottom: 16rpx;
+  border-radius: 32rpx; /* 16px → 32rpx */
+  margin-bottom: 32rpx; /* 16px → 32rpx */
 }
 
 .result-circle {
-  width: 72rpx;
-  height: 72rpx;
+  width: 144rpx; /* 72px → 144rpx */
+  height: 144rpx;
   border-radius: 50%;
-  margin: 8rpx auto 16rpx;
+  margin: 16rpx auto 32rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .result-glyph {
-  font-size: 40rpx;
+  font-size: 80rpx; /* 40px → 80rpx */
   font-weight: 700;
   line-height: 1;
 }
 
 .result-title {
-  font-size: 20rpx;
+  font-size: 40rpx; /* 20rpx typo → 40rpx (HTML v3.2 .result-title 20px) */
   font-weight: 600;
-  margin-bottom: 6rpx;
+  margin-bottom: 12rpx;
   line-height: 1.4;
 }
 
 .result-desc {
-  font-size: 14px;
+  font-size: 28rpx; /* 14px → 28rpx */
   color: #4E5969;
   line-height: 1.5;
 }
@@ -71,9 +71,9 @@
 
 /* Auth code card hint */
 .auth-hint {
-  font-size: 12px;
+  font-size: 24rpx; /* 12px → 24rpx */
   color: #86909C;
   text-align: center;
-  margin-top: 10rpx;
+  margin-top: 20rpx;
   line-height: 1.5;
 }

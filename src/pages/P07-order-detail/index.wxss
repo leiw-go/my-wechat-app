@@ -5,7 +5,7 @@
 .page {
   background: #F7F8FA;
   min-height: 100vh;
-  padding-bottom: 200rpx;
+  padding-bottom: 240rpx; /* 200rpx → 240rpx (action-footer 现约 220rpx 高 + 安全区) */
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
   color: #1D2129;
 }
@@ -13,50 +13,50 @@
 /* Error / empty state */
 .error-block {
   background: #FFFFFF;
-  border-radius: 16rpx;
+  border-radius: 32rpx; /* 16rpx → 32rpx */
   text-align: center;
-  padding: 60rpx 24rpx;
-  margin: 60rpx 16rpx 0;
+  padding: 120rpx 48rpx; /* 60rpx 24rpx → 120rpx 48rpx */
+  margin: 120rpx 32rpx 0; /* 60rpx 16rpx → 120rpx 32rpx */
 }
 
 .error-icon {
-  width: 96rpx;
-  height: 96rpx;
+  width: 192rpx; /* 96rpx → 192rpx */
+  height: 192rpx;
   border-radius: 50%;
   background: #F2F3F5;
-  margin: 0 auto 16rpx;
+  margin: 0 auto 32rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40rpx;
+  font-size: 80rpx; /* 40rpx → 80rpx */
   color: #C9CDD4;
-  line-height: 96rpx;
+  line-height: 192rpx;
 }
 
 .error-title {
-  font-size: 16px;
+  font-size: 32rpx; /* 16px → 32rpx */
   font-weight: 500;
-  margin-bottom: 6rpx;
+  margin-bottom: 12rpx;
 }
 
 .error-desc {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #86909C;
   line-height: 1.5;
-  margin-bottom: 20rpx;
+  margin-bottom: 40rpx;
 }
 
 .btn-primary {
   display: inline-block;
-  min-width: 140rpx;
-  height: 44rpx;
-  line-height: 44rpx;
-  padding: 0 24rpx;
+  min-width: 280rpx; /* 140rpx → 280rpx */
+  height: 88rpx; /* 44rpx → 88rpx (满足 tap 标准) */
+  line-height: 88rpx;
+  padding: 0 48rpx;
   background: #1677FF;
   color: #FFFFFF;
   border: none;
-  border-radius: 16rpx;
-  font-size: 14px;
+  border-radius: 32rpx; /* 16rpx → 32rpx */
+  font-size: 30rpx; /* 14px → 30rpx */
   font-weight: 500;
   margin: 0;
 }
@@ -74,10 +74,10 @@
 /* 1. 订单状态卡 */
 .status-card {
   background: #FFFFFF;
-  border-radius: 16rpx;
+  border-radius: 32rpx; /* 16rpx → 32rpx */
   border: 1rpx solid #E5E6EB;
-  padding: 18rpx 16rpx;
-  margin-bottom: 16rpx;
+  padding: 36rpx 32rpx; /* 18rpx 16rpx → 36rpx 32rpx */
+  margin-bottom: 32rpx; /* 16rpx → 32rpx */
   box-sizing: border-box;
 }
 
@@ -85,20 +85,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12rpx;
+  margin-bottom: 24rpx; /* 12rpx → 24rpx */
 }
 
 .order-no {
-  font-size: 12px;
+  font-size: 24rpx; /* 12px → 24rpx */
   color: #86909C;
   line-height: 1.4;
 }
 
 .badge {
-  font-size: 12px;
+  font-size: 24rpx; /* 12px → 24rpx */
   font-weight: 500;
-  padding: 2rpx 10rpx;
-  border-radius: 4rpx;
+  padding: 4rpx 16rpx; /* 2rpx 10rpx → 4rpx 16rpx */
+  border-radius: 8rpx; /* 4rpx → 8rpx */
   line-height: 1.5;
 }
 
@@ -114,24 +114,24 @@
 }
 
 .amount-label {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #4E5969;
 }
 
 .amount-value {
-  font-size: 24px;
+  font-size: 48rpx; /* 24px → 48rpx (HTML v3.2 大金额) */
   font-weight: 700;
   color: #1D2129;
-  letter-spacing: 0.5px;
+  letter-spacing: 1rpx;
 }
 
 /* 4. 订单信息区 */
 .info-block {
   background: #FFFFFF;
-  border-radius: 16rpx;
+  border-radius: 32rpx; /* 16rpx → 32rpx */
   border: 1rpx solid #E5E6EB;
-  padding: 0 16rpx;
-  margin-top: 16rpx;
+  padding: 0 32rpx; /* 16rpx → 32rpx */
+  margin-top: 32rpx; /* 16rpx → 32rpx */
   box-sizing: border-box;
 }
 
@@ -139,7 +139,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14rpx 0;
+  padding: 28rpx 0; /* 14rpx → 28rpx */
   border-bottom: 1rpx solid #F2F3F5;
 }
 
@@ -149,58 +149,58 @@
 
 .info-row__label {
   color: #86909C;
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
 }
 
 .info-row__value {
   color: #1D2129;
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   text-align: right;
   word-break: break-all;
 }
 
 .info-row__value--mono {
   font-family: "SF Mono", "Menlo", "Consolas", monospace;
-  font-size: 12px;
-  letter-spacing: 0.5px;
+  font-size: 24rpx; /* 12px → 24rpx */
+  letter-spacing: 1rpx;
 }
 
 /* 5. 历史码区块 */
 .section-label {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #4E5969;
   font-weight: 500;
-  margin: 16rpx 4rpx 8rpx;
+  margin: 32rpx 8rpx 16rpx; /* 16rpx 4rpx 8rpx → 32rpx 8rpx 16rpx */
 }
 
 .history-row {
   background: #FFFFFF;
   border: 1rpx solid #E5E6EB;
-  border-radius: 12rpx;
-  padding: 12rpx 16rpx;
+  border-radius: 24rpx; /* 12rpx → 24rpx */
+  padding: 24rpx 32rpx; /* 12rpx 16rpx → 24rpx 32rpx */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8rpx;
+  margin-bottom: 16rpx; /* 8rpx → 16rpx */
 }
 
 .history-row__code {
   font-family: "SF Mono", "Menlo", "Consolas", monospace;
-  font-size: 12px;
+  font-size: 24rpx; /* 12px → 24rpx */
   color: #4E5969;
-  letter-spacing: 0.5px;
+  letter-spacing: 1rpx;
 }
 
 .history-row__time {
-  font-size: 12px;
+  font-size: 24rpx; /* 12px → 24rpx */
   color: #86909C;
 }
 
 .empty-history {
   background: #F2F3F5;
-  border-radius: 12rpx;
-  padding: 16rpx;
+  border-radius: 24rpx; /* 12rpx → 24rpx */
+  padding: 32rpx; /* 16rpx → 32rpx */
   text-align: center;
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #86909C;
 }

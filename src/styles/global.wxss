@@ -1,8 +1,11 @@
 /**
- * 全局样式 — PANR-19 C5
+ * 全局样式 — PANR-19 C5 (v3.2 size 修正)
  *
- * 本迭代支付功能砍掉，提供 .banner 通用样式供 P4/P5/P11/P12 占位页使用，
- * 文案统一为后端 5030 message "支付功能未启用"，避免前后端文案漂移。
+ * 历史：v1 支付砍版，.banner 通用样式供 P4/P5/P11/P12 占位页使用。
+ * v3.2（2026-08-31）：统一字号/间距基准
+ *   - body font-size 28rpx（14px）保持 — 与 ADR-007 v2 typography token 对齐
+ *   - 注意：本次 size 修复对所有 token 走「375px 屏 1px = 2rpx」换算，
+ *     见各 component WXSS 中的 HTML v3.2 对齐注释
  */
 
 page {
@@ -10,17 +13,18 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC",
     "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   color: #1f2329;
-  font-size: 28rpx;
+  font-size: 28rpx; /* 14px (375px 屏) */
   line-height: 1.5;
 }
 
+/* 全局 .banner（被各页面 WXSS 覆盖为更明确的 4 调色板，此处保留历史 fallback） */
 .banner {
   display: flex;
   align-items: flex-start;
-  gap: 12rpx;
-  margin: 16rpx 24rpx;
-  padding: 20rpx 24rpx;
-  border-radius: 12rpx;
+  gap: 20rpx;
+  margin: 32rpx 32rpx;
+  padding: 24rpx 32rpx;
+  border-radius: 24rpx;
   border: 1rpx solid transparent;
 }
 
@@ -32,13 +36,13 @@ page {
 
 .banner__icon {
   flex: none;
-  font-size: 28rpx;
-  line-height: 40rpx;
+  font-size: 32rpx;
+  line-height: 48rpx;
 }
 
 .banner__body {
   flex: 1;
-  font-size: 26rpx;
-  line-height: 40rpx;
+  font-size: 28rpx;
+  line-height: 48rpx;
   word-break: break-all;
 }

@@ -61,6 +61,21 @@ Page<PageData, Record<string, never>>({
     this.setData({ agreed });
   },
 
+  // v3.2 custom nav 返回 — 系统 nav 已禁用，靠 bindtap 兜底
+  // 兜底逻辑：优先 wx.navigateBack（保留页面栈）；无栈时 reLaunch 到 P06 兜底页
+  onTapBack() {
+    const pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ delta: 1 });
+    } else {
+      // reLaunch 场景（P01 home → P04 直跳）没有可回退页面，回 P01 home
+      wx.reLaunch({ url: '/pages/P04-order-confirm/index' }).catch(() => {
+        // 最后兜底：什么都不做，避免无响应
+        wx.showToast({ title: '已是入口页', icon: 'none' });
+      });
+    }
+  },
+
   // PM 派活规格：toast「支付功能开发中」
   onPrimary() {
     wx.showToast({ title: '支付功能开发中', icon: 'none' });

@@ -13,19 +13,63 @@
 .page {
   background: #F7F8FA;
   min-height: 100vh;
-  padding-bottom: 140rpx; /* 留出 footer 高度 */
+  padding-bottom: 240rpx; /* 140rpx → 240rpx (action-footer 现约 220rpx 高 + 安全区) */
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
   color: #1D2129;
 }
 
+/* v3.2 custom navbar — 88rpx tap area + SVG back icon
+ * 触发条件：index.json navigationStyle: "custom"
+ * 设计基准：HTML v3.2 .nav (52px h) + .nav .back (44×44 含 -6px 补偿)
+ */
+.custom-nav {
+  height: 88rpx; /* 44px → 88rpx on 375px 屏 */
+  padding: 0 32rpx; /* 16px → 32rpx */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  box-sizing: border-box;
+}
+
+.custom-nav__back {
+  width: 64rpx; /* 44px → 64rpx (HTML v3.2 .nav .back 含 -6px 视觉补偿，实际 88rpx tap) */
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1D2129;
+  /* 视觉居中补偿：负 margin 让 back 视觉位置与 title baseline 对齐 */
+  margin-left: -12rpx;
+  padding: 12rpx; /* 配合负 margin，扩到 ≥ 88rpx tap 区 */
+}
+
+.custom-nav__back svg {
+  width: 48rpx; /* 24px → 48rpx */
+  height: 48rpx;
+  display: block;
+}
+
+.custom-nav__title {
+  font-size: 32rpx; /* 16px → 32rpx (HTML v3.2) */
+  font-weight: 500;
+  color: #1D2129;
+  flex: 1;
+  text-align: center;
+}
+
+.custom-nav__right {
+  width: 64rpx; /* 平衡左侧 back 视觉宽度 */
+}
+
 .content {
-  padding: 4px 16px 16px;
+  padding: 8rpx 32rpx 32rpx; /* 4px 16px 16px → 8rpx 32rpx 32rpx */
 }
 
 /* Section label — 页面专属（不属于 P0 组件） */
 .section-label {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #4E5969;
   font-weight: 500;
-  margin: 16rpx 4rpx 8rpx;
+  margin: 32rpx 8rpx 16rpx; /* 16rpx 4rpx 8rpx → 32rpx 8rpx 16rpx */
 }

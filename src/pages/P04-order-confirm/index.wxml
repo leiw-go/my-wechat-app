@@ -1,4 +1,4 @@
-<!-- P04 订单确认页 — PANR-19 C5 high-fidelity (P0 组件化 v2)
+<!-- P04 订单确认页 — PANR-19 C5 high-fidelity (P0 组件化 v2 + v3.2 navbar)
      重构后：所有结构件改用 P0 组件（ADR-007 §二方案 3）
        - goods-header-card 商品头卡
        - tier-list 档位列表
@@ -9,8 +9,23 @@
        - 应用 PM 视觉规格（橙 #FF7A45 / 12rpx / 17/600）→ ⚠ token 偏离 ADR-007 §三 baseline
        - CTA 文案「立即开通 · 支付暂未上线」（payment-deferred 期）
        - toast「支付功能开发中」（与 PRD v1.1 + 5030 降级口径一致）
-     系统 nav 由 index.json navigationBarTitleText "订单确认" 渲染 -->
+     2026-08-31 v3.2 sync：
+       - 切换为 custom navbar（navigationStyle: "custom"），标题由 .custom-nav 渲染
+       - 标题栏左侧补「返回上一页」图标（HTML v3.2 .nav .back），内联 SVG 24×24 + 88rpx tap area
+       - 删除系统 nav 依赖（PANR-28 C-1 §11 显式声明 navigationStyle:custom 路径）
+       - 系统返回失效 fallback：bindtap 调 wx.navigateBack() 兜底（适配 reLaunch 场景） -->
 <view class="page">
+  <!-- v3.2 custom navbar -->
+  <view class="custom-nav">
+    <view class="custom-nav__back" bindtap="onTapBack" role="button" aria-label="返回上一页">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M15 18L9 12L15 6" stroke="#1D2129" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </view>
+    <view class="custom-nav__title">确认订单</view>
+    <view class="custom-nav__right"></view>
+  </view>
+
   <view class="content">
     <!-- Header card -->
     <goods-header-card

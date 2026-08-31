@@ -1,5 +1,7 @@
 {
-  "navigationBarTitleText": "订单确认",
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#ffffff",
   "usingComponents": {
     "goods-header-card": "/components/goods-header-card/index",
     "tier-list": "/components/tier-list/index",

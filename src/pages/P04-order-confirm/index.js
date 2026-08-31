@@ -59,6 +59,18 @@ Page({
     this.setData({ agreed });
   },
 
+  // v3.2 custom nav 返回 — 系统 nav 已禁用，靠 bindtap 兜底
+  // 兜底逻辑：优先 wx.navigateBack（保留页面栈）；无栈时 reLaunch 兜底
+  onTapBack() {
+    const pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ delta: 1 });
+    } else {
+      // reLaunch 场景（P01 home → P04 直跳）没有可回退页面
+      wx.showToast({ title: '已是入口页', icon: 'none' });
+    }
+  },
+
   // action-footer 主按钮点击（PM 派活规格：toast「支付功能开发中」）
   onPrimary() {
     wx.showToast({ title: '支付功能开发中', icon: 'none' });

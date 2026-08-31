@@ -3,25 +3,25 @@
  * 4 色调色板 (P04 .banner.warn / p11-renew .banner--info 参考) */
 
 .banner {
-  margin-top: 12rpx;
-  border-radius: 12rpx;
-  padding: 12rpx 14rpx;
+  margin-top: 24rpx; /* HTML v3.2 .banner margin-top 12px → 24rpx */
+  border-radius: 24rpx; /* HTML v3.2 12px → 24rpx */
+  padding: 24rpx 28rpx; /* HTML v3.2 12px 14px → 24rpx 28rpx */
   display: flex;
-  gap: 10rpx;
+  gap: 20rpx; /* HTML v3.2 10px → 20rpx */
   align-items: flex-start;
   box-sizing: border-box;
 }
 
 .banner__dot {
-  width: 8rpx;
-  height: 8rpx;
+  width: 16rpx; /* HTML v3.2 8px → 16rpx */
+  height: 16rpx;
   border-radius: 50%;
-  margin-top: 6rpx;
+  margin-top: 12rpx; /* HTML v3.2 6px → 12rpx */
   flex-shrink: 0;
 }
 
 .banner__text {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   line-height: 1.5;
   flex: 1;
   word-break: break-all;

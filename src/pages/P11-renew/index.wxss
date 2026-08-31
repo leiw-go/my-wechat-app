@@ -4,18 +4,18 @@
 .page {
   background: #F7F8FA;
   min-height: 100vh;
-  padding-bottom: 140rpx;
+  padding-bottom: 240rpx; /* 140rpx → 240rpx (action-footer 现约 220rpx 高 + 安全区) */
   font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
   color: #1D2129;
 }
 
 .content {
-  padding: 4px 16px 16px;
+  padding: 8rpx 32rpx 32rpx; /* 4px 16px 16px → 8rpx 32rpx 32rpx */
 }
 
 .section-label {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #4E5969;
   font-weight: 500;
-  margin: 16rpx 4rpx 8rpx;
+  margin: 32rpx 8rpx 16rpx;
 }

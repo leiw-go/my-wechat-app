@@ -3,25 +3,26 @@
  * text 13px / link #1677FF */
 
 .agreement-row {
-  min-height: 48rpx;
+  min-height: 96rpx; /* HTML v3.2 .agreement 48px → 96rpx (375px 屏); 满足 88rpx tap 标准 */
   display: flex;
   align-items: center;
-  gap: 10rpx;
-  padding: 8rpx 4rpx;
+  gap: 20rpx; /* HTML v3.2 10px → 20rpx */
+  padding: 16rpx 8rpx; /* HTML v3.2 8px 4px → 16rpx 8rpx */
   box-sizing: border-box;
 }
 
 .agreement-row__checkbox {
-  width: 18rpx;
-  height: 18rpx;
-  border: 1.5rpx solid #C9CDD4;
-  border-radius: 4rpx;
+  width: 36rpx; /* HTML v3.2 .checkbox 18px → 36rpx */
+  height: 36rpx;
+  border: 2rpx solid #C9CDD4; /* HTML v3.2 1.5px → 2rpx (可视) */
+  border-radius: 8rpx; /* HTML v3.2 4px → 8rpx */
   flex-shrink: 0;
   background: #FFFFFF;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .agreement-row__checkbox--checked {
@@ -31,13 +32,13 @@
 
 .agreement-row__mark {
   color: #FFFFFF;
-  font-size: 12px;
+  font-size: 24rpx; /* 12px → 24rpx */
   font-weight: 700;
   line-height: 1;
 }
 
 .agreement-row__text {
-  font-size: 13px;
+  font-size: 26rpx; /* 13px → 26rpx */
   color: #4E5969;
   line-height: 1.4;
 }

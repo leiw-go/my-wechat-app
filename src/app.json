@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/P01-home/index",
     "pages/P04-order-confirm/index",
     "pages/P05-pay-result/index",
     "pages/P06-my-orders/index",

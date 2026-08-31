@@ -1,0 +1,100 @@
+<!-- P01 首页 — PANR-19 C5 (v3.2 sync · 3-tab)
+     视觉对齐：issue 附件 p01-home.html (v3.2 / batch_v3 12:08Z)
+     v3.2 变更：
+       - 底部 Tab 移除「订单」入口（支付未上线，避免引导进入订单流程）
+       - Tab Bar 由 4 列改为 3 列（首页 / 分类 / 我的）
+     设计令牌（ADR-007 v2.1 · 2026-08-30 设计师签字）：
+       color: accent.primary #FF7A45 / brand.base #1677FF / text #1D2129
+              text-secondary #4E5969 / placeholder #86909C / border #C9CDD4
+              bg-card #FFFFFF / bg #F7F8FA / warn #FF7D00 / warn-bg #FFF4E5
+       radius: btn-cta 24rpx / container-warn 24rpx
+       typography: card-name-lg 32/600 / cta-secondary 30/500 / notice-text 26/500
+     系统 nav 由 index.json navigationBarTitleText "首页" 渲染 -->
+<view class="page">
+  <!-- Top search (替代传统 NavBar) -->
+  <view class="topbar">
+    <view class="search-bar" bindtap="onTapSearch" hover-class="search-bar--hover">
+      <text class="search-bar__icon">⌕</text>
+      <text class="search-bar__placeholder">搜索小程序商品</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <!-- 推荐位 Banner -->
+    <view class="banner-area">
+      <view class="banner" style="background: linear-gradient(135deg, #1677FF 0%, #0A47A0 100%);">
+        <text class="banner__tag">{{banner.tag}}</text>
+        <view>
+          <view class="banner__title">{{banner.title}}</view>
+          <view class="banner__sub">{{banner.sub}}</view>
+        </view>
+      </view>
+      <view class="dots">
+        <view
+          wx:for="{{banners}}"
+          wx:key="title"
+          class="dots__dot {{currentBannerIdx === index ? 'dots__dot--active' : ''}}"
+          data-idx="{{index}}"
+          bindtap="onTapBannerDot"
+        ></view>
+      </view>
+    </view>
+
+    <!-- 分类入口 (2 行 × 4 列) -->
+    <view class="section-label">
+      <text>商品分类</text>
+    </view>
+    <view class="cat-grid">
+      <view
+        wx:for="{{categories}}"
+        wx:key="code"
+        class="cat-item"
+        data-code="{{item.code}}"
+        bindtap="onTapCategory"
+        hover-class="cat-item--hover"
+      >
+        <view class="cat-icon">{{item.icon}}</view>
+        <view class="cat-name">{{item.name}}</view>
+      </view>
+    </view>
+
+    <!-- 推荐商品 (2 列卡片) -->
+    <view class="section-label">
+      <text>为你推荐</text>
+      <text class="section-label__more">查看全部 ›</text>
+    </view>
+    <view class="goods-grid">
+      <view
+        wx:for="{{goods}}"
+        wx:key="id"
+        class="goods-card"
+        data-id="{{item.id}}"
+        bindtap="onTapGoods"
+        hover-class="goods-card--hover"
+      >
+        <view class="goods-cover" style="background: {{item.cover}};">
+          <text class="goods-cover__label">SaaS</text>
+        </view>
+        <view class="goods-meta">
+          <view class="goods-name">{{item.name}}</view>
+          <view class="goods-sub">{{item.sub}}</view>
+          <view class="goods-price">¥{{item.price}}<text class="goods-price__unit">{{item.unit}}</text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Bottom Tab Bar (v3.2 · 移除「订单」入口，等支付上线后恢复) -->
+  <view class="tabbar">
+    <view
+      wx:for="{{tabs}}"
+      wx:key="key"
+      class="tab {{currentTab === item.key ? 'tab--active' : ''}}"
+      data-key="{{item.key}}"
+      bindtap="onTapTab"
+    >
+      <view class="tab__glyph">{{item.key === 'home' ? '⌂' : item.key === 'category' ? '☰' : '◉'}}</view>
+      <view class="tab__label">{{item.label}}</view>
+    </view>
+  </view>
+</view>
